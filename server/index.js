@@ -64,10 +64,12 @@ CREATE TABLE views (pname varchar(45) NOT NULL, username varchar(45) DEFAULT NUL
 
 const db = mysql.createConnection({
 	//host: 'localhost',
-	socketPath: '/cloudsql/sharkbit-111:asia-southeast1:moseeqi',
-	user: 'root',
-	password: '123',
-	database: 'moseeqi',
+	socketPath: 'mysql://bf6e65fdfe9335:f4ac9a38@us-cdbr-east-05.cleardb.net/heroku_9cc6bf5a097a6a8?reconnect=true',
+
+	user: 'bf6e65fdfe9335',
+	password: 'f4ac9a38',
+	hostname: 'us-cdbr-east-05.cleardb.net',
+	database: 'heroku_9cc6bf5a097a6a8',
 	multipleStatements: true
 });
 
