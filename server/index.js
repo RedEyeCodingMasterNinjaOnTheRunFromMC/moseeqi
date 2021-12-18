@@ -43,24 +43,24 @@ let users = []; //for seeding
 // CREATE TABLE added (p_name VARCHAR(45) NOT NULL, s_name VARCHAR(45) NOT NULL, p_ph VARCHAR(45)NOT NULL, s_ph VARCHAR(45) NOT NULL, PRIMARY KEY(p_name, s_name, p_ph, s_ph))
 // `
 
-const InitializeTables = `
-DROP TABLE IF EXISTS added;
-DROP TABLE IF EXISTS follows;
-DROP TABLE IF EXISTS likes;
-DROP TABLE IF EXISTS listens;
-DROP TABLE IF EXISTS music;
-DROP TABLE IF EXISTS user;
-DROP TABLE IF EXISTS playlist;
-DROP TABLE IF EXISTS views;
+// const InitializeTables = `
+// DROP TABLE IF EXISTS added;
+// DROP TABLE IF EXISTS follows;
+// DROP TABLE IF EXISTS likes;
+// DROP TABLE IF EXISTS listens;
+// DROP TABLE IF EXISTS music;
+// DROP TABLE IF EXISTS user;
+// DROP TABLE IF EXISTS playlist;
+// DROP TABLE IF EXISTS views;
 
-CREATE TABLE added (p_name varchar(45) NOT NULL, s_name varchar(45) NOT NULL, p_ph varchar(45) NOT NULL, s_ph varchar(45) NOT NULL, PRIMARY KEY (p_name,s_name,p_ph,s_ph));
-CREATE TABLE follows (follower_phone_number varchar(45) NOT NULL, followed_phone_number varchar(45) NOT NULL, PRIMARY KEY (follower_phone_number,followed_phone_number));
-CREATE TABLE likes (s_name varchar(45) NOT NULL, s_ph varchar(45) NOT NULL, liker_ph varchar(45) NOT NULL, PRIMARY KEY (s_name,s_ph,liker_ph));
-CREATE TABLE listens (s_ph varchar(45) NOT NULL, s_name varchar(45) NOT NULL, listener_ph varchar(45) NOT NULL, listen_counts int unsigned DEFAULT 0, PRIMARY KEY (s_ph,s_name,listener_ph));
-CREATE TABLE music (sname varchar(45) NOT NULL, phone_number varchar(45) NOT NULL, username varchar(45) DEFAULT NULL, like_count int(10) unsigned zerofill DEFAULT NULL, genre varchar(45) DEFAULT NULL, music_path varchar(300) DEFAULT NULL, promoted tinyint DEFAULT NULL, PRIMARY KEY (sname,phone_number));
-CREATE TABLE playlist (pname varchar(45) NOT NULL, creator_phone_number varchar(45) NOT NULL, creator_username varchar(45) DEFAULT NULL, PRIMARY KEY (pname,creator_phone_number));
-CREATE TABLE user (phone_number varchar(45) NOT NULL, email varchar(45) NOT NULL, username varchar(45) NOT NULL, password varchar(45) NOT NULL, follower_count int unsigned NOT NULL DEFAULT 0, profile_picture blob, type varchar(45) DEFAULT 1, earnings int DEFAULT 0, PRIMARY KEY (phone_number), UNIQUE KEY email_UNIQUE (email), UNIQUE KEY phone_number_UNIQUE (phone_number));
-CREATE TABLE views (pname varchar(45) NOT NULL, username varchar(45) DEFAULT NULL, user_number varchar(45) NOT NULL, PRIMARY KEY (pname,user_number));`;
+// CREATE TABLE added (p_name varchar(45) NOT NULL, s_name varchar(45) NOT NULL, p_ph varchar(45) NOT NULL, s_ph varchar(45) NOT NULL, PRIMARY KEY (p_name,s_name,p_ph,s_ph));
+// CREATE TABLE follows (follower_phone_number varchar(45) NOT NULL, followed_phone_number varchar(45) NOT NULL, PRIMARY KEY (follower_phone_number,followed_phone_number));
+// CREATE TABLE likes (s_name varchar(45) NOT NULL, s_ph varchar(45) NOT NULL, liker_ph varchar(45) NOT NULL, PRIMARY KEY (s_name,s_ph,liker_ph));
+// CREATE TABLE listens (s_ph varchar(45) NOT NULL, s_name varchar(45) NOT NULL, listener_ph varchar(45) NOT NULL, listen_counts int unsigned DEFAULT 0, PRIMARY KEY (s_ph,s_name,listener_ph));
+// CREATE TABLE music (sname varchar(45) NOT NULL, phone_number varchar(45) NOT NULL, username varchar(45) DEFAULT NULL, like_count int(10) unsigned zerofill DEFAULT NULL, genre varchar(45) DEFAULT NULL, music_path varchar(300) DEFAULT NULL, promoted tinyint DEFAULT NULL, PRIMARY KEY (sname,phone_number));
+// CREATE TABLE playlist (pname varchar(45) NOT NULL, creator_phone_number varchar(45) NOT NULL, creator_username varchar(45) DEFAULT NULL, PRIMARY KEY (pname,creator_phone_number));
+// CREATE TABLE user (phone_number varchar(45) NOT NULL, email varchar(45) NOT NULL, username varchar(45) NOT NULL, password varchar(45) NOT NULL, follower_count int unsigned NOT NULL DEFAULT 0, profile_picture blob, type varchar(45) DEFAULT 1, earnings int DEFAULT 0, PRIMARY KEY (phone_number), UNIQUE KEY email_UNIQUE (email), UNIQUE KEY phone_number_UNIQUE (phone_number));
+// CREATE TABLE views (pname varchar(45) NOT NULL, username varchar(45) DEFAULT NULL, user_number varchar(45) NOT NULL, PRIMARY KEY (pname,user_number));`;
 
 const db = mysql.createConnection({
 	//host: 'localhost',
@@ -623,11 +623,11 @@ app.listen(PORT, () => {
 });
 
 // Clean up process
-process.on('SIGTERM', () => {
-	server.close(() => {
-		console.log('Server stopped');
-	});
-});
+// process.on('SIGTERM', () => {
+// 	server.close(() => {
+// 		console.log('Server stopped');
+// 	});
+// });
 
 function getRandomArbitrary(min, max) {
 	return Math.floor(Math.random() * (max - min) + min);
