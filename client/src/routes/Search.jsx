@@ -101,7 +101,7 @@ export const Search = () => {
 	const navigate = useNavigate();
 
 	const UserRequest = () => {
-		Axios.post('https://sharkbit-111.uc.r.appspot.com/search_user', {
+		Axios.post('https://moseeqi.herokuapp.com/search_user', {
 			username: username
 		}, {
 			headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }
@@ -120,7 +120,7 @@ export const Search = () => {
 	};
 
 	const SongRequest = () => {
-		Axios.post('https://sharkbit-111.uc.r.appspot.com/search_music', {
+		Axios.post('https://moseeqi.herokuapp.com/search_music', {
 			sname: username
 		}, {
 			headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }
@@ -147,7 +147,7 @@ export const Search = () => {
 		} else if (value === 'both') {
 			console.log('both search');
 			setNoMatch(true);
-			Axios.post('https://sharkbit-111.uc.r.appspot.com/search_user', {
+			Axios.post('https://moseeqi.herokuapp.com/search_user', {
 				username: username
 			}, {
 				headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }
@@ -163,7 +163,7 @@ export const Search = () => {
 					setNoMatch(false);
 				}
 			});
-			Axios.post('https://sharkbit-111.uc.r.appspot.com/search_music', {
+			Axios.post('https://moseeqi.herokuapp.com/search_music', {
 				sname: username
 			}, {
 				headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }

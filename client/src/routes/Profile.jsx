@@ -18,7 +18,7 @@ export const Profile = () => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		Axios.post('https://sharkbit-111.uc.r.appspot.com/get-user',{
+		Axios.post('https://moseeqi.herokuapp.com/get-user',{
 			phone_number: phone_number
 		}, {headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'}
 		}).then((response) => {
@@ -33,7 +33,7 @@ export const Profile = () => {
 			}
 		});
 
-		Axios.post('https://sharkbit-111.uc.r.appspot.com/follow_user', {
+		Axios.post('https://moseeqi.herokuapp.com/follow_user', {
 			check: true,
 			followed_ph: phone_number,
 			follower_ph: JSON.parse(sessionStorage.getItem("user-data")).phone_number
@@ -53,7 +53,7 @@ export const Profile = () => {
 	});
 
 	const deleteAccount = () => {
-		Axios.post('https://sharkbit-111.uc.r.appspot.com/delete_account', {
+		Axios.post('https://moseeqi.herokuapp.com/delete_account', {
 			phone_number: phone_number
 		}, {
 			headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }
@@ -64,7 +64,7 @@ export const Profile = () => {
 
 	const GetPlaylist = () => {
 		console.log('here');
-		Axios.post('https://sharkbit-111.uc.r.appspot.com/search_playlist', {
+		Axios.post('https://moseeqi.herokuapp.com/search_playlist', {
 				phone_number: JSON.parse(sessionStorage.getItem("user-data")).phone_number
 			}, {
 				headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }
@@ -80,7 +80,7 @@ export const Profile = () => {
 
 	const followUser = () => {
 		setFollowing(true);
-		Axios.post('https://sharkbit-111.uc.r.appspot.com/follow_user', {
+		Axios.post('https://moseeqi.herokuapp.com/follow_user', {
 			check: false,
 			followed_ph: phone_number,
 			follower_ph: JSON.parse(sessionStorage.getItem("user-data")).phone_number

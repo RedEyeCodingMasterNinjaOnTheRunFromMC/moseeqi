@@ -18,7 +18,7 @@ export const Music = () => {
 
 	const AddSongToPlaylist = (playlistName, p_ph) => {
 		console.log('adding to p:');
-		Axios.post('https://sharkbit-111.uc.r.appspot.com/add_song_to_playlist',{
+		Axios.post('https://moseeqi.herokuapp.com/add_song_to_playlist',{
 			pname: playlistName,
 			sname: sname,
 			p_ph: p_ph,
@@ -36,7 +36,7 @@ export const Music = () => {
 
 	const AddLike = () => {
 		setIsLiked(true);
-		Axios.post('https://sharkbit-111.uc.r.appspot.com/add_like', {
+		Axios.post('https://moseeqi.herokuapp.com/add_like', {
 			check: false,
 			phone_number: phone_number,
 			sname: sname,
@@ -58,7 +58,7 @@ export const Music = () => {
 
 	const GetPlaylist = () => {
 		console.log('here');
-		Axios.post('https://sharkbit-111.uc.r.appspot.com/search_playlist', {
+		Axios.post('https://moseeqi.herokuapp.com/search_playlist', {
 				phone_number: JSON.parse(sessionStorage.getItem("user-data")).phone_number
 			}, {
 				headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }
@@ -73,7 +73,7 @@ export const Music = () => {
 	};
 
 	useEffect(() => {
-		Axios.post('https://sharkbit-111.uc.r.appspot.com/get-music', {
+		Axios.post('https://moseeqi.herokuapp.com/get-music', {
 			phone_number: phone_number,
 			sname: sname
 		}, {
@@ -83,7 +83,7 @@ export const Music = () => {
 			console.log('music info received');
 		});
 		//to check if user has already liked this song
-		Axios.post('https://sharkbit-111.uc.r.appspot.com/add_like', {
+		Axios.post('https://moseeqi.herokuapp.com/add_like', {
 		check: true,
 		phone_number: phone_number,
 		sname: sname,
@@ -176,7 +176,7 @@ export const Music = () => {
 				</Box> */}
 				<Spacer />
 
-				<MusicPlayer source={`https://sharkbit-111.uc.r.appspot.com/${phone_number}/music/${sname}`} ph={phone_number} sn={sname} />
+				<MusicPlayer source={`https://moseeqi.herokuapp.com/${phone_number}/music/${sname}`} ph={phone_number} sn={sname} />
 			</VStack>
 		</div>
 	);

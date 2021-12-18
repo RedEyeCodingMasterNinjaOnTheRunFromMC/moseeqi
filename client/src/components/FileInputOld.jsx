@@ -50,7 +50,7 @@ export const FileInputOld = () => {
 			formData.append('user_name', data.username);
 			formData.append('sname', songName);
 			formData.append('genre', genre);
-			Axios.post('https://sharkbit-111.uc.r.appspot.com//', formData, {
+			Axios.post('https://moseeqi.herokuapp.com//', formData, {
 				headers: {
 					'Content-Type': 'multipart/form-data',
 					'Access-Control-Allow-Origin': '*', 

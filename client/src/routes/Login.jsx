@@ -16,7 +16,7 @@ export const Login = () => {
 		setIsInvalid(false);
 		setValid(false);
 		actions.setSubmitting(false);
-		Axios.post('https://sharkbit-111.uc.r.appspot.com/login', values, {
+		Axios.post('https://moseeqi.herokuapp.com/login', values, {
 			headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }
 		}).then((response) => {
 			if (response.data === 'invalid') {
@@ -27,7 +27,7 @@ export const Login = () => {
 				sessionStorage.setItem('isUserLogged', true);
 				let data = sessionStorage.getItem('user-data');
 				data = JSON.parse(data);
-				Axios.post('https://sharkbit-111.uc.r.appspot.com/get-user',{
+				Axios.post('https://moseeqi.herokuapp.com/get-user',{
 					phone_number: data.phone_number
 				},  {headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }
 				}).then((response) => {
