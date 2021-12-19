@@ -18,23 +18,23 @@ app.use(express.json());
 app.use(fileUpload());
 app.use(express.static('data'));
 
-// app.use(function(req, res, next) {
-// 	// Website you wish to allow to connect
-// 	res.setHeader('Access-Control-Allow-Origin', '*');
+app.use(function(req, res, next) {
+	// Website you wish to allow to connect
+	res.setHeader('Access-Control-Allow-Origin', '*');
 
-// 	// Request methods you wish to allow
-// 	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+	// Request methods you wish to allow
+	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 
-// 	// Request headers you wish to allow
-// 	res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type');
+	// Request headers you wish to allow
+	res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type');
 
-// 	// // Set to true if you need the website to include cookies in the requests sent
-// 	// // to the API (e.g. in case you use sessions)
-// 	// res.setHeader('Access-Control-Allow-Credentials', true);
+	// // Set to true if you need the website to include cookies in the requests sent
+	// // to the API (e.g. in case you use sessions)
+	// res.setHeader('Access-Control-Allow-Credentials', true);
 
-// 	// Pass to next layer of middleware
-// 	next();
-// });
+	// Pass to next layer of middleware
+	next();
+});
 
 let users = []; //for seeding
 
@@ -63,14 +63,18 @@ let users = []; //for seeding
 // CREATE TABLE views (pname varchar(45) NOT NULL, username varchar(45) DEFAULT NULL, user_number varchar(45) NOT NULL, PRIMARY KEY (pname,user_number));`;
 
 const db = mysql.createConnection({
-	//host: 'localhost',
-	socketPath: 'mysql://bf6e65fdfe9335:f4ac9a38@us-cdbr-east-05.cleardb.net/heroku_9cc6bf5a097a6a8?reconnect=true',
-
-	user: 'bf6e65fdfe9335',
-	password: 'f4ac9a38',
-	hostname: 'us-cdbr-east-05.cleardb.net',
-	database: 'heroku_9cc6bf5a097a6a8',
+	host: 'localhost',
+	database: 'moseeqi',
+	user: 'root',
 	multipleStatements: true
+
+	// socketPath: 'mysql://bf6e65fdfe9335:f4ac9a38@us-cdbr-east-05.cleardb.net/heroku_9cc6bf5a097a6a8?reconnect=true',
+
+	// user: 'bf6e65fdfe9335',
+	// password: 'f4ac9a38',
+	// hostname: 'us-cdbr-east-05.cleardb.net',
+	// database: 'heroku_9cc6bf5a097a6a8',
+	// multipleStatements: true
 });
 
 db.connect(function(err) {
@@ -80,14 +84,14 @@ db.connect(function(err) {
 	}
 	console.log(`Connected to database as id ${db.threadId}`);
 
-	db.query(InitializeTables, (err) => {
-		if (err) {
-			console.log(err);
-			throw err;
-		} else {
-			console.log('success');
-		}
-	});
+	// db.query(InitializeTables, (err) => {
+	// 	if (err) {
+	// 		console.log(err);
+	// 		throw err;
+	// 	} else {
+	// 		console.log('success');
+	// 	}
+	// });
 
 	SeedUsers(10000);
 	//SeedPlaylists();
@@ -96,21 +100,6 @@ db.connect(function(err) {
 app.get('/', (req, res) => {
 	res.send('Server is running');
 });
-
-// for (let i = 0; i < 10000; i++)
-// {
-// 	db.query('(phone_number, username, email, password) VALUES (?,?,?,?)',
-// 	[rn(options), random.first(), randomEmail(), random.first()],
-// 	(err, result) => {
-// 		if (err) {
-// 			if (err.errno === 1062) {
-// 				res.send('duplicate-entry');
-// 			}
-// 		} else {
-// 			res.send('user-added');
-// 		}
-// 	})
-// };
 
 app.get('/check-db', (req, res) => {
 	db.query(`SELECT * FROM user`, (req, res) => {
@@ -634,42 +623,51 @@ function getRandomArbitrary(min, max) {
 }
 
 function SeedUsers(amount) {
-	let values = [];
-	for (let index = 0; index < amount; index++) {
-		const username = uniqueNamesGenerator({ dictionaries: [ adjectives, colors, animals ] });
-		const phone_number = getRandomArbitrary(10000, 100000000);
-		const password = getRandomArbitrary(10000, 100000000);
-		const email = uniqueNamesGenerator({ dictionaries: [ adjectives, colors, animals ] }) + '@site.com';
-
-		if (!users.some((e) => e.ph === phone_number || e.email === email)) {
-			values.push([ phone_number, username, email, password ]);
-			users.push({ ph: phone_number, username: username, email: email });
-		}
-	}
-
-	db.query('INSERT INTO user (phone_number, username, email, password) VALUES ?', [ values ], (err, result) => {
+	console.log('Please Wait, Seeding Users...');
+	db.query('SELECT COUNT(*) AS userCount FROM user', [], (err, result) => {
 		if (err) {
-			if (err.errno === 1062) {
-				console.log('Error entry');
-			}
+			console.log('Error counting users:', err);
 		} else {
-			SeedPlaylists();
-		}
-	});
-}
+			amount = amount - result[0].userCount;
 
-function SeedPlaylists() {
-	let values = [];
-	for (let index = 0; index < users.length; index++) {
-		const pname = uniqueNamesGenerator({ dictionaries: [ adjectives, colors, animals ] });
-		values.push([ pname, users[index].ph ]);
-	}
-	db.query('INSERT INTO playlist (pname, creator_phone_number) VALUES ?', [ values ], (err, result) => {
-		if (err) {
-			if (err.errno === 1062) {
-				console.log('Error entry');
+			let values = [];
+			for (let index = 0; index < amount; index++) {
+				const username = uniqueNamesGenerator({ dictionaries: [ adjectives, colors, animals ] });
+				const phone_number = getRandomArbitrary(10000, 100000000);
+				const password = getRandomArbitrary(10000, 100000000);
+				const email = uniqueNamesGenerator({ dictionaries: [ adjectives, colors, animals ] }) + '@site.com';
+
+				db.query(
+					'INSERT INTO user (phone_number, username, email, password) VALUES (?,?,?,?) ',
+					[ phone_number, username, email, password ],
+					(err, result) => {
+						if (err) {
+							if (err.errno === 1062) {
+								console.log('Error entry user', index, err);
+							} else {
+								console.log(err);
+							}
+						} else {
+							const pname = uniqueNamesGenerator({ dictionaries: [ adjectives, colors, animals ] });
+							db.query(
+								'INSERT INTO playlist (pname, creator_phone_number) VALUES (?,?)',
+								[ pname, phone_number ],
+								(err, result) => {
+									if (err) {
+										if (err.errno === 1062) {
+											console.log('Error entry playlist');
+										}
+									} else {
+										if (index === amount - 1) {
+											console.log('Seeding Users Complete!');
+										}
+									}
+								}
+							);
+						}
+					}
+				);
 			}
-		} else {
 		}
 	});
 }
