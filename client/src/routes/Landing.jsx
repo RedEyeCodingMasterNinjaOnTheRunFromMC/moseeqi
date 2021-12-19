@@ -23,7 +23,7 @@ export const Landing = () => (
 					</HStack>
 					that Moves People
 					<Text width="30vw" color="white" fontSize="xl" opacity="60%" paddingTop="30px" paddingBottom="30px">
-						Moseeqi allow you to create, share and listen to music as part of a global community
+						Moseeqi allows you to create, share and listen to music as part of a global community
 					</Text>
 					<RouterLink to="/signup">
 						<Button colorScheme="secondary" size="lg" textColor="white ">
