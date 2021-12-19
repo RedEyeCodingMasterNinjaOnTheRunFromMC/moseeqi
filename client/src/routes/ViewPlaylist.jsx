@@ -1,42 +1,55 @@
-import { Box, Link, Avatar, Button, HStack, Spacer, VStack, Heading, Container, Text, List, ListItem } from '@chakra-ui/react';
+import {
+	Box,
+	Avatar,
+	Button,
+	HStack,
+	Spacer,
+	VStack,
+	Heading,
+	Container,
+	Text,
+	List,
+	ListItem
+} from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 // import { SimpleInput } from '../components/TextInput';
 // import { InvalidMessage } from '../components/InvalidMessage';
 import { useParams } from 'react-router';
 import Axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const RetSongs = ({ songs }) => {
 	return (
 		<List spacing={3}>
-			{songs.map((song) => (
-				<ListItem key={song.s_name}>
-					<songCard song={song} />
+			{songs.map((song, index) => (
+				<ListItem key={index}>
+					<SongCard song={song} />
 				</ListItem>
 			))}
 		</List>
 	);
 };
 
-const songCard = ({ song }) => {
+const SongCard = ({ song }) => {
 	return (
 		<Box shadow="md" borderRadius="full" padding={1} w="500px" bgGradient="linear(to-t, gray.200, gray.100)">
 			{/* <Text>{song}</Text> */}
-			<Link to={`/music/${song.phone_number}/${song.sname}`}>
+			<Link to={`/music/${song.s_ph}/${song.s_name}`}>
 				<HStack>
 					<Avatar
 						shadow="md"
 						size="md"
-						name={song.sname}
+						name={song.s_name}
 						src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRikhddhHqZyLCxvwFFd1weIv6wQttST0z9q4MjTnLnyxv9cp1HEqvBNnzqm98IXfvWyFI&usqp=CAU"
 					/>
 					<Box w="10px" />
 					<Text fontSize="l" textColor="black">
-						{song.sname}
+						{song.s_name}
 					</Text>
-					<Text fontSize="md" textColor="gray">
+					{/* <Text fontSize="md" textColor="gray">
 						(creator: {song.username})
-					</Text>
+					</Text> */}
 				</HStack>
 			</Link>
 		</Box>
@@ -45,30 +58,36 @@ const songCard = ({ song }) => {
 
 export const ViewPlaylist = () => {
 	const navigate = useNavigate();
-    const { p_name, p_ph } = useParams();
-    const [ songs, setSongs ] = useState([]);
+	const { p_name, p_ph } = useParams();
+	const [ songs, setSongs ] = useState([]);
 
-    useEffect(() => {
-        Axios.post(
-            `${process.env.REACT_APP_SERVER_URL}/view_playlist`,
-            {
-                p_name: p_name,
-                p_ph: p_ph
-                //phone_number: JSON.parse(sessionStorage.getItem('user-data')).phone_number
-            },
-            {
-                headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }
-            }
-        ).then((response) => {
-            // for (let i = 0; i < response.data.length; i++) {
-            //     setSongs((songs) => [ ...songs, response.data[i] ]);
-            // }
-            console.log("RESPONSE: ", response.data);
-            setSongs(response.data);
-        });
+	useEffect(() => {
+		Axios.post(
+			`${process.env.REACT_APP_SERVER_URL}/view_playlist`,
+			{
+				p_name: p_name,
+				p_ph: p_ph
+				//phone_number: JSON.parse(sessionStorage.getItem('user-data')).phone_number
+			},
+			{
+				headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }
+			}
+		).then((response) => {
+			// for (let i = 0; i < response.data.length; i++) {
+			//     setSongs((songs) => [ ...songs, response.data[i] ]);
+			// }
+
+			setSongs(response.data);
+		});
 	}, []);
 
-    
+	useEffect(
+		() => {
+			console.log('Songs: ', songs);
+		},
+		[ songs ]
+	);
+
 	return (
 		<div>
 			<HStack w="full" pr={20} pt={5} pb={5} pl={10} spacing={10} bg="brand.primary">
@@ -80,7 +99,7 @@ export const ViewPlaylist = () => {
 			<Container maxWidth="full" pt="30px">
 				<VStack padding={0} spacing={10}>
 					<Heading size="md">Songs in: {p_name}</Heading>
-                    <RetSongs songs={songs} />
+					<RetSongs songs={songs} />
 					{/* <SimpleInput
 						label="Playlist Name"
 						value={playlistName}
