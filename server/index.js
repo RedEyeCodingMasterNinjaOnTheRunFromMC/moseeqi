@@ -94,7 +94,7 @@ db.connect(function(err) {
 	// 	}
 	// });
 
-	SeedUsers(1000);
+	SeedUsers(100);
 	//SeedPlaylists();
 });
 
