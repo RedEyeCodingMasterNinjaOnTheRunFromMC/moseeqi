@@ -52,7 +52,8 @@ export const ViewPlaylist = () => {
         `${process.env.REACT_APP_SERVER_URL}/view_playlist`,
         {
             p_name: p_name,
-            phone_number: JSON.parse(sessionStorage.getItem('user-data')).phone_number
+            p_ph: p_ph
+            //phone_number: JSON.parse(sessionStorage.getItem('user-data')).phone_number
         },
         {
             headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }
