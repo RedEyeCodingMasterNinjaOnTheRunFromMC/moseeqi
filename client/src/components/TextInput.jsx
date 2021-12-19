@@ -26,20 +26,19 @@ export const TextInput = ({ label, id, placeholder, field, error, touched, type 
 	);
 };
 
-export const SimpleInput = ({label, value, onChange, type}) => {
+export const SimpleInput = ({ label, value, onChange, type }) => {
 	return (
 		<VStack w="300px" align="left">
 			<Text ml="18px">{label}</Text>
-			<Input type = {type} value = {value} onChange = {onChange} variant = "filled" />
+			<Input type={type} value={value} onChange={onChange} variant="filled" />
 		</VStack>
 	);
 };
 
 SimpleInput.defaultProps = {
-  label: "Input",
-  type: "",
-}
- 
+	label: 'Input',
+	type: ''
+};
 
 export const PasswordInput = ({ label, id, placeholder, field, error, touched }) => {
 	const [ show, setShow ] = useBoolean();

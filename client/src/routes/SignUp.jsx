@@ -1,9 +1,9 @@
-import { Button, HStack, Spacer, VStack, Heading, Container, Text } from '@chakra-ui/react';
+import { Button, Box, Image, HStack, Spacer, VStack, Heading, Container, Text } from '@chakra-ui/react';
 import { Formik, Form, Field } from 'formik';
 import validator from 'validator';
 import { TextInput, PasswordInput } from '../components/TextInput';
 import { useState } from 'react';
-
+import { Link as RouterLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 import Axios from 'axios';
@@ -70,104 +70,145 @@ export const SignUp = () => {
 	};
 
 	return (
-		<div>
-			<HStack w="full" pr={20} pt={5} pb={5} pl={10} spacing={10} bg="brand.primary">
-				<Spacer />
-				<Button colorScheme="blue" textColor="white" size="sm" onClick={() => navigate(-1)}>
+		<VStack overflow="hidden" height="100vh" position="relative" width="100vw" alignItems="flex-start">
+			<HStack width="full" zIndex={10} paddingLeft="5vw" paddingRight="5vw">
+				<Button colorScheme="secondary" textColor="white" size="sm" onClick={() => navigate(-1)}>
 					Back
 				</Button>
-			</HStack>
-			<Container maxWidth="full" pt="30px">
-				<VStack padding={0} spacing={10}>
-					<Heading size="md">Create Account</Heading>
-					<Formik
-						initialValues={{ username: '', email: '', phone_number: '', password: '', confirm: '' }}
-						onSubmit={SignUpOnClick}
-						validate={validate}
+				<Spacer />
+				<RouterLink to="/">
+					<Text
+						fontWeight={700}
+						color="white"
+						fontSize="2xl"
+						opacity="60%"
+						paddingTop="30px"
+						paddingBottom="30px"
 					>
-						{(props) => (
-							<Form>
-								<Field name="username">
-									{({ field, form }) => (
-										<TextInput
-											label="Username"
-											id="username"
-											placeholder=""
-											field={field}
-											error={form.errors.username}
-											touched={form.touched.username}
-										/>
-									)}
-								</Field>
-								<Field name="email">
-									{({ field, form }) => (
-										<TextInput
-											label="Email"
-											id="email"
-											placeholder="example@site.com"
-											field={field}
-											error={form.errors.email}
-											touched={form.touched.email}
-										/>
-									)}
-								</Field>
-								<Field name="phone_number">
-									{({ field, form }) => (
-										<TextInput
-											label="Phone Number"
-											id="phone_number"
-											placeholder=""
-											field={field}
-											error={form.errors.phone_number}
-											touched={form.touched.phone_number}
-											type="tel"
-										/>
-									)}
-								</Field>
-								<Field name="password">
-									{({ field, form }) => (
-										<PasswordInput
-											label="Password"
-											id="password"
-											placeholder=""
-											field={field}
-											error={form.errors.password}
-											touched={form.touched.password}
-										/>
-									)}
-								</Field>
-								<Field name="confirm">
-									{({ field, form }) => (
-										<PasswordInput
-											label="Confirm Password"
-											id="confirm"
-											placeholder=""
-											field={field}
-											error={form.errors.confirm}
-											touched={form.touched.confirm}
-										/>
-									)}
-								</Field>
+						moseeqi
+					</Text>
+				</RouterLink>
+			</HStack>
 
-								<Button
-									colorScheme="primary"
-									w="full"
-									size="lg"
-									isLoading={props.isSubmitting}
-									type="submit"
-								>
-									Sign Up
-								</Button>
-								<VStack w="300px" align="left" pt={5}>
-									<Text textColor="gray" align="center" fontSize="8pt">
-										By Signing up, you agree to our terms and conditions{' '}
-									</Text>
-								</VStack>
-							</Form>
-						)}
-					</Formik>
-				</VStack>
-			</Container>
-		</div>
+			<Box
+				borderRadius="100%"
+				position="absolute"
+				width="130vw"
+				height="130vw"
+				bgGradient="linear(to-r, brand.secondary, brand.primary)"
+				bottom={10}
+				left="50vw"
+			/>
+
+			<Image
+				position="absolute"
+				bottom="10vh"
+				right="10vw"
+				boxSize="25vw"
+				objectFit="contain"
+				src="viola.png"
+				alt="BG"
+				//filter="drop-shadow(10px 10px 10px #555)"
+			/>
+
+			<VStack position="absolute" right="5vw" top="20vh" alignItems="flex-end">
+				<Heading color="white">One of us already?</Heading>
+				<RouterLink to="/login">
+					<Button size="lg">LOGIN</Button>
+				</RouterLink>
+			</VStack>
+
+			<VStack spacing={10} paddingLeft="10vw" paddingTop="30px" width="30vw">
+				<Heading fontWeight={800} size="md">
+					Create Account
+				</Heading>
+				<Formik
+					initialValues={{ username: '', email: '', phone_number: '', password: '', confirm: '' }}
+					onSubmit={SignUpOnClick}
+					validate={validate}
+				>
+					{(props) => (
+						<Form>
+							<Field name="username">
+								{({ field, form }) => (
+									<TextInput
+										label="Username"
+										id="username"
+										placeholder=""
+										field={field}
+										error={form.errors.username}
+										touched={form.touched.username}
+									/>
+								)}
+							</Field>
+							<Field name="email">
+								{({ field, form }) => (
+									<TextInput
+										label="Email"
+										id="email"
+										placeholder="example@site.com"
+										field={field}
+										error={form.errors.email}
+										touched={form.touched.email}
+									/>
+								)}
+							</Field>
+							<Field name="phone_number">
+								{({ field, form }) => (
+									<TextInput
+										label="Phone Number"
+										id="phone_number"
+										placeholder=""
+										field={field}
+										error={form.errors.phone_number}
+										touched={form.touched.phone_number}
+										type="tel"
+									/>
+								)}
+							</Field>
+							<Field name="password">
+								{({ field, form }) => (
+									<PasswordInput
+										label="Password"
+										id="password"
+										placeholder=""
+										field={field}
+										error={form.errors.password}
+										touched={form.touched.password}
+									/>
+								)}
+							</Field>
+							<Field name="confirm">
+								{({ field, form }) => (
+									<PasswordInput
+										label="Confirm Password"
+										id="confirm"
+										placeholder=""
+										field={field}
+										error={form.errors.confirm}
+										touched={form.touched.confirm}
+									/>
+								)}
+							</Field>
+
+							<Button
+								colorScheme="primary"
+								w="full"
+								size="lg"
+								isLoading={props.isSubmitting}
+								type="submit"
+							>
+								Sign Up
+							</Button>
+							<VStack w="300px" align="left" pt={5}>
+								<Text textColor="gray" align="center" fontSize="8pt">
+									By Signing up, you agree to our terms and conditions{' '}
+								</Text>
+							</VStack>
+						</Form>
+					)}
+				</Formik>
+			</VStack>
+		</VStack>
 	);
 };
