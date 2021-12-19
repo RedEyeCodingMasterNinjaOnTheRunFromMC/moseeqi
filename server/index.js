@@ -68,11 +68,12 @@ const db = mysql.createConnection({
 	// user: 'root',
 	// multipleStatements: true
 
-	socketPath: 'mysql://bf6e65fdfe9335:f4ac9a38@us-cdbr-east-05.cleardb.net/heroku_9cc6bf5a097a6a8?reconnect=true',
-
+	//host: 'mysql://bf6e65fdfe9335:f4ac9a38@us-cdbr-east-05.cleardb.net/heroku_9cc6bf5a097a6a8?reconnect=true',
+	host: 'us-cdbr-east-05.cleardb.net',
+	reconnect: true,
 	user: 'bf6e65fdfe9335',
 	password: 'f4ac9a38',
-	hostname: 'us-cdbr-east-05.cleardb.net',
+	//hostname: 'us-cdbr-east-05.cleardb.net',
 	database: 'heroku_9cc6bf5a097a6a8',
 	multipleStatements: true
 });
