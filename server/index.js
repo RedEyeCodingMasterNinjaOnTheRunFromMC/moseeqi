@@ -320,7 +320,7 @@ app.post('/delete_music', (req, res) => {
 });
 
 app.post('/search_music', (req, res) => {
-	console.log('sup', req.body);
+	//console.log('sup', req.body);
 	const sname = req.body.sname;
 	db.query(
 		'SELECT sname, phone_number, username, like_count, genre, music_path FROM music WHERE (sname LIKE ?) or (username LIKE ?)',
@@ -333,6 +333,25 @@ app.post('/search_music', (req, res) => {
 				res.send(result);
 			} else {
 				res.send('no_match');
+			}
+		}
+	);
+});
+
+app.post('/view_playlist', (req, res) => {
+	//console.log('sup', req.body);
+	const p_name = req.body.p_name;
+	const p_ph = req.body.p_ph;
+
+	db.query(
+		'SELECT s_name FROM added where p_ph = ? and p_name = ?',
+		[ p_ph, p_name ],
+		(err, result) => {
+			if (err) console.log(err);
+			if (result[0]) {
+				//sql query result is not null
+				console.log('query successful', result);
+				res.send(result);
 			}
 		}
 	);

@@ -63,14 +63,8 @@ export const ViewPlaylist = () => {
 			}
 		).then((response) => {
 			if (response.data === 'no_match') {
-                //setSongMatch(false);
             } else {
-                // for (let i = 0; i < response.data.length; i++) {
-                //     setSongs((songs) => [ ...songs, response.data[i] ]);
-                // }
                 setSongs(response.data);
-                //setUserMatch(true);
-                //setNoMatch(false);
             }
 
 		});
