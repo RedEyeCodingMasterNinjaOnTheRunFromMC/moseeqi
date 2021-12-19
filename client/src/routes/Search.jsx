@@ -168,9 +168,9 @@ export const Search = () => {
 				if (response.data === 'no_match') {
 					setSongMatch(false);
 				} else {
-					for (let i = 0; i < response.data.length; i++) {
-						setUsers((users) => [ ...users, response.data[i] ]);
-					}
+					// for (let i = 0; i < response.data.length; i++) {
+					// 	setUsers((users) => [ ...users, response.data[i] ]);
+					// }
 					setUsers(response.data);
 					setUserMatch(true);
 					setNoMatch(false);

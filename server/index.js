@@ -347,8 +347,9 @@ app.post('/view_playlist', (req, res) => {
 		'SELECT s_name FROM added where p_ph = ? and p_name = ?',
 		[ p_ph, p_name ],
 		(err, result) => {
+			console.log("HERE PL SONGS: ",result);
 			if (err) console.log(err);
-			if (result[0]) {
+			if (result) {
 				//sql query result is not null
 				console.log('query successful', result);
 				res.send(result);

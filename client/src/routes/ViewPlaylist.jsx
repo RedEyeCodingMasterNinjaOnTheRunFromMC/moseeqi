@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import Axios from 'axios';
 
-const retSongs = ({ songs }) => {
+const RetSongs = ({ songs }) => {
 	return (
 		<List spacing={3}>
 			{songs.map((song) => (
@@ -60,11 +60,11 @@ export const ViewPlaylist = () => {
                 headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }
             }
         ).then((response) => {
-            if (response.data === 'no_match') {
-            } else {
-                setSongs(response.data);
-            }
-    
+            // for (let i = 0; i < response.data.length; i++) {
+            //     setSongs((songs) => [ ...songs, response.data[i] ]);
+            // }
+            console.log("RESPONSE: ", response.data);
+            setSongs(response.data);
         });
 	}, []);
 
@@ -80,7 +80,7 @@ export const ViewPlaylist = () => {
 			<Container maxWidth="full" pt="30px">
 				<VStack padding={0} spacing={10}>
 					<Heading size="md">Songs in: {p_name}</Heading>
-                    <retSongs songs={songs} />
+                    <RetSongs songs={songs} />
 					{/* <SimpleInput
 						label="Playlist Name"
 						value={playlistName}
