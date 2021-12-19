@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import Axios from 'axios';
 import { InvalidMessage } from '../components/InvalidMessage';
 import { Link as RouterLink } from 'react-router-dom';
+import drum from '../assets/images/drum.png';
 
 export const Login = () => {
 	const navigate = useNavigate();
@@ -82,7 +83,7 @@ export const Login = () => {
 				left="10vw"
 				boxSize="25vw"
 				objectFit="contain"
-				src="drum.png"
+				src={drum}
 				alt="BG"
 				//filter="drop-shadow(10px 10px 10px #555)"
 			/>

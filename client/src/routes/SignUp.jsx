@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
+import viola from '../assets/images/viola.png';
 import Axios from 'axios';
 
 export const SignUp = () => {
@@ -106,7 +107,7 @@ export const SignUp = () => {
 				right="10vw"
 				boxSize="25vw"
 				objectFit="contain"
-				src="viola.png"
+				src={viola}
 				alt="BG"
 				//filter="drop-shadow(10px 10px 10px #555)"
 			/>
