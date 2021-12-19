@@ -343,30 +343,26 @@ app.post('/view_playlist', (req, res) => {
 	const p_name = req.body.p_name;
 	const p_ph = req.body.p_ph;
 
-	db.query(
-		'SELECT s_name FROM added where p_ph = ? and p_name = ?',
-		[ p_ph, p_name ],
-		(err, result) => {
-			console.log("HERE PL SONGS: ",result);
-			if (err) console.log(err);
-			if (result) {
-				//sql query result is not null
-				console.log('query successful', result);
-				res.send(result);
-			}
+	db.query('SELECT s_name, s_ph FROM added where p_ph = ? and p_name = ?', [ p_ph, p_name ], (err, result) => {
+		console.log('HERE PL SONGS: ', result);
+		if (err) console.log(err);
+		if (result) {
+			//sql query result is not null
+			console.log('query successful', result);
+			res.send(result);
 		}
-	);
+	});
 });
 
 app.post('/get-user', (req, res) => {
 	console.log('get user request recei', req.body);
 
 	db.query(
-		'SELECT count(*) as followers FROM follows WHERE followed_phone_number=?', 
-		[req.body.phone_number], 
+		'SELECT count(*) as followers FROM follows WHERE followed_phone_number=?',
+		[ req.body.phone_number ],
 		(err, result) => {
 			if (err) console.log(err);
-			if (result[0]){
+			if (result[0]) {
 				db.query(
 					'UPDATE user SET follower_count=? WHERE phone_number=?',
 					[ result[0].followers, req.body.phone_number ],
@@ -377,7 +373,8 @@ app.post('/get-user', (req, res) => {
 					}
 				);
 			}
-	});
+		}
+	);
 	db.query('SELECT * FROM user WHERE phone_number=?', [ req.body.phone_number ], (err, result) => {
 		if (err) console.log(err);
 		if (result[0]) {
@@ -387,8 +384,6 @@ app.post('/get-user', (req, res) => {
 			res.send(result);
 		}
 	});
-
-
 });
 
 app.post('/get-music', (req, res) => {
