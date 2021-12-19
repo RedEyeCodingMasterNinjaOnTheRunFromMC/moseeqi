@@ -161,7 +161,7 @@ export const Profile = () => {
 						{noPlaylist ? (
 							<MenuItem>No Playlist Found</MenuItem>
 						) : (
-							playlists.map((p) => <Link to= {`/view_playlist/${p.pname}`}><MenuItem key={p.pname}>{p.pname}</MenuItem></Link>)
+							playlists.map((p) => <Link to= {`/view_playlist/${p.pname}/${phone_number}`}><MenuItem key={p.pname}>{p.pname}</MenuItem></Link>)
 						)}
 					</MenuList>
 				</Menu>

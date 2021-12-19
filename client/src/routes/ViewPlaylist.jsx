@@ -45,7 +45,7 @@ const songCard = ({ song }) => {
 
 export const ViewPlaylist = () => {
 	const navigate = useNavigate();
-    const { p_name } = useParams();
+    const { p_name, p_ph } = useParams();
     const [ songs, setSongs ] = useState([]);
 
     Axios.post(

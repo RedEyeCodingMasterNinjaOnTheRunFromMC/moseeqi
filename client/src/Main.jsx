@@ -28,6 +28,6 @@ export const Main = () => (
 		<Route path="/upload_music" element={<UploadMusic />} />
 		<Route path="/delete_music" element={<DeleteMusic />} />
 		<Route path="/create_playlist" element={<CreatePlaylist />} />
-		<Route path="/view_playlist/:p_name" element={<ViewPlaylist />}/>
+		<Route path="/view_playlist/:p_name/:p_ph" element={<ViewPlaylist />}/>
 	</Routes>
 );
