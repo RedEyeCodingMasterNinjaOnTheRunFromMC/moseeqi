@@ -11,34 +11,34 @@ export const NavbarUser = () => {
 	return (
 		<HStack w="full" pr={20} pt={5} pb={5} pl={10} spacing={10} bg="brand.primary">
 			<Spacer />
-			<Link to="/create_playlist">
+			{/* <Link to="/create_playlist">
 				<Button colorScheme="primary" textColor="white" size="sm">
 					CREATE PLAYLIST
 				</Button>
-			</Link>
+			</Link> */}
 			<Link to="/upload_music">
 				<Button colorScheme="primary" textColor="white" size="sm">
-					UPLOAD MUSIC
+					Upload Music
 				</Button>
 			</Link>
-			<Link to="/delete_music">
+			{/* <Link to="/delete_music">
 				<Button colorScheme="orange" textColor="white" size="sm">
 					DELETE MUSIC
 				</Button>
-			</Link>
+			</Link> */}
 			<Link to={`/profile/${JSON.parse(sessionStorage.getItem('user-data')).phone_number}`}>
 				<Button colorScheme="primary" textColor="white" size="sm">
-					PROFILE
+					Profile
 				</Button>
 			</Link>
 			<Link to="/search">
 				<Button colorScheme="primary" textColor="white" size="sm">
-					SEARCH
+					Search
 				</Button>
 			</Link>
 			<Link to="/">
 				<Button colorScheme="red" textColor="white" size="sm" onClick={logOut}>
-					LOG OUT
+					Log Out
 				</Button>
 			</Link>
 		</HStack>

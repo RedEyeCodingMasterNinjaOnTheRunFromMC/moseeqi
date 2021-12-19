@@ -13,6 +13,7 @@ import {
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { InvalidMessage } from '../components/InvalidMessage';
 // import { SimpleInput } from '../components/TextInput';
 // import { InvalidMessage } from '../components/InvalidMessage';
 import { useParams } from 'react-router';
@@ -60,6 +61,7 @@ export const ViewPlaylist = () => {
 	const navigate = useNavigate();
 	const { p_name, p_ph } = useParams();
 	const [ songs, setSongs ] = useState([]);
+	const [ noSongs, setNoSongs ] = useState(true);
 
 	useEffect(() => {
 		Axios.post(
@@ -76,8 +78,13 @@ export const ViewPlaylist = () => {
 			// for (let i = 0; i < response.data.length; i++) {
 			//     setSongs((songs) => [ ...songs, response.data[i] ]);
 			// }
-
-			setSongs(response.data);
+			if (response.data.length === 0){
+				setNoSongs(true);
+			} else {
+				setNoSongs(false);
+				setSongs(response.data);
+			}
+			
 		});
 	}, []);
 
@@ -99,29 +106,15 @@ export const ViewPlaylist = () => {
 			<Container maxWidth="full" pt="30px">
 				<VStack padding={0} spacing={10}>
 					<Heading size="md">Songs in: {p_name}</Heading>
-					<RetSongs songs={songs} />
-					{/* <SimpleInput
-						label="Playlist Name"
-						value={playlistName}
-						onChange={(event) => {
-							setPLName(event.target.value);
-						}}
-					/>
-					<Button w={200} colorScheme="green" onClick={createPL}>
-						Upload
-					</Button>
-					<VStack w="300px" align="left" pt={5}>
-						<Text textColor="gray" align="center" fontSize="8pt">
-							By Uploading this file, you agree to our terms and conditions.{' '}
-						</Text>
-					</VStack>
-					{playlistAdded ? (
-						<InvalidMessage
-							message="Playlist Created!"
-							color="green.800"
-							bg="linear(to-t, green.200, green.100)"
-						/>
-					) : null} */}
+
+					{noSongs ? (
+						<InvalidMessage>
+							message="Playlist Empty!"
+							color="red.800"
+							bg="linear(to-t, red.200, red.100)"
+						</InvalidMessage>
+					) : <RetSongs songs={songs} />}
+					
 				</VStack>
 			</Container>
 		</div>
