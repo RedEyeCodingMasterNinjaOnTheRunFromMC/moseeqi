@@ -122,9 +122,8 @@ app.post('/create_user', (req, res) => {
 		[ phone_number, username, email, password ],
 		(err, result) => {
 			if (err) {
-				console.log(err);
 				if (err.errno === 1062) {
-					res.send('duplicate-entry');
+					res.send('duplicate-entry', phone_number, username, email, password);
 				}
 			} else {
 				console.log(`Sucessfully Added User ${email}`);
@@ -609,7 +608,7 @@ app.post('/add_song_to_playlist', (req, res) => {
 });
 
 app.listen(PORT, () => {
-	console.log(`Server listening on http://localhost:${PORT}`);
+	console.log(`Server listening on PORT:${PORT}`);
 });
 
 // Clean up process
