@@ -74,7 +74,7 @@ export const Profile = () => {
 				console.log('not following already');
 			}
 		});
-	});
+	}, []);
 
 	const deleteAccount = () => {
 		Axios.post(
@@ -161,7 +161,7 @@ export const Profile = () => {
 						{noPlaylist ? (
 							<MenuItem>No Playlist Found</MenuItem>
 						) : (
-							playlists.map((p) => <MenuItem key={p.pname}>{p.pname}</MenuItem>)
+							playlists.map((p) => <Link to= "/"><MenuItem key={p.pname}>{p.pname}</MenuItem></Link>)
 						)}
 					</MenuList>
 				</Menu>

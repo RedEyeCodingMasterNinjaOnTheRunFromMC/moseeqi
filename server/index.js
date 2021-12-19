@@ -340,6 +340,24 @@ app.post('/search_music', (req, res) => {
 
 app.post('/get-user', (req, res) => {
 	console.log('get user request recei', req.body);
+
+	db.query(
+		'SELECT count(*) as followers FROM follows WHERE followed_phone_number=?', 
+		[req.body.phone_number], 
+		(err, result) => {
+			if (err) console.log(err);
+			if (result[0]){
+				db.query(
+					'UPDATE user SET follower_count=? WHERE phone_number=?',
+					[ result[0].followers, req.body.phone_number ],
+					(err) => {
+						if (err) {
+							console.log(err);
+						}
+					}
+				);
+			}
+	});
 	db.query('SELECT * FROM user WHERE phone_number=?', [ req.body.phone_number ], (err, result) => {
 		if (err) console.log(err);
 		if (result[0]) {
@@ -349,6 +367,8 @@ app.post('/get-user', (req, res) => {
 			res.send(result);
 		}
 	});
+
+
 });
 
 app.post('/get-music', (req, res) => {
