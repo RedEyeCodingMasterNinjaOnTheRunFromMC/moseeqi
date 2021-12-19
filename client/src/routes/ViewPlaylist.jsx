@@ -1,6 +1,6 @@
 import { Box, Link, Avatar, Button, HStack, Spacer, VStack, Heading, Container, Text, List, ListItem } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 // import { SimpleInput } from '../components/TextInput';
 // import { InvalidMessage } from '../components/InvalidMessage';
 import { useParams } from 'react-router';
@@ -48,23 +48,27 @@ export const ViewPlaylist = () => {
     const { p_name, p_ph } = useParams();
     const [ songs, setSongs ] = useState([]);
 
-    Axios.post(
-        `${process.env.REACT_APP_SERVER_URL}/view_playlist`,
-        {
-            p_name: p_name,
-            p_ph: p_ph
-            //phone_number: JSON.parse(sessionStorage.getItem('user-data')).phone_number
-        },
-        {
-            headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }
-        }
-    ).then((response) => {
-        if (response.data === 'no_match') {
-        } else {
-            setSongs(response.data);
-        }
+    useEffect(() => {
+        Axios.post(
+            `${process.env.REACT_APP_SERVER_URL}/view_playlist`,
+            {
+                p_name: p_name,
+                p_ph: p_ph
+                //phone_number: JSON.parse(sessionStorage.getItem('user-data')).phone_number
+            },
+            {
+                headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }
+            }
+        ).then((response) => {
+            if (response.data === 'no_match') {
+            } else {
+                setSongs(response.data);
+            }
+    
+        });
+	}, []);
 
-    });
+    
 	return (
 		<div>
 			<HStack w="full" pr={20} pt={5} pb={5} pl={10} spacing={10} bg="brand.primary">
