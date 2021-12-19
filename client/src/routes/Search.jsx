@@ -98,7 +98,7 @@ export const Search = () => {
 	const [ isSongMatch, setSongMatch ] = useState(false);
 	const [ isUserMatch, setUserMatch ] = useState(false);
 
-	const navigate = useNavigate();
+	//const navigate = useNavigate();
 
 	const UserRequest = () => {
 		Axios.post(
