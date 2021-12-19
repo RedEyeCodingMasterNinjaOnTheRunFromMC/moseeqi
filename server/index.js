@@ -3,8 +3,6 @@ const mysql = require('mysql');
 const cors = require('cors');
 const fileUpload = require('express-fileupload');
 const fs = require('fs');
-const path = require('path');
-const { devNull } = require('os');
 
 const { uniqueNamesGenerator, adjectives, colors, animals } = require('unique-names-generator');
 
@@ -62,41 +60,48 @@ let users = []; //for seeding
 // CREATE TABLE user (phone_number varchar(45) NOT NULL, email varchar(45) NOT NULL, username varchar(45) NOT NULL, password varchar(45) NOT NULL, follower_count int unsigned NOT NULL DEFAULT 0, profile_picture blob, type varchar(45) DEFAULT 1, earnings int DEFAULT 0, PRIMARY KEY (phone_number), UNIQUE KEY email_UNIQUE (email), UNIQUE KEY phone_number_UNIQUE (phone_number));
 // CREATE TABLE views (pname varchar(45) NOT NULL, username varchar(45) DEFAULT NULL, user_number varchar(45) NOT NULL, PRIMARY KEY (pname,user_number));`;
 
-const db = mysql.createConnection({
-	// host: 'localhost',
-	// database: 'moseeqi',
-	// user: 'root',
-	// multipleStatements: true
+var db;
 
-	//host: 'mysql://bf6e65fdfe9335:f4ac9a38@us-cdbr-east-05.cleardb.net/heroku_9cc6bf5a097a6a8?reconnect=true',
-	host: 'us-cdbr-east-05.cleardb.net',
-	reconnect: true,
-	user: 'bf6e65fdfe9335',
-	password: 'f4ac9a38',
-	//hostname: 'us-cdbr-east-05.cleardb.net',
-	database: 'heroku_9cc6bf5a097a6a8',
-	multipleStatements: true
-});
+function HandleDatabseDisconnect() {
+	db = mysql.createConnection({
+		// host: 'localhost',
+		// database: 'moseeqi',
+		// user: 'root',
+		// multipleStatements: true
 
-db.connect(function(err) {
-	if (err) {
-		console.error(`Error connecting to database: ${err}`);
-		return;
-	}
-	console.log(`Connected to database as id ${db.threadId}`);
+		//host: 'mysql://bf6e65fdfe9335:f4ac9a38@us-cdbr-east-05.cleardb.net/heroku_9cc6bf5a097a6a8?reconnect=true',
+		host: 'us-cdbr-east-05.cleardb.net',
+		reconnect: true,
+		user: 'bf6e65fdfe9335',
+		password: 'f4ac9a38',
+		//hostname: 'us-cdbr-east-05.cleardb.net',
+		database: 'heroku_9cc6bf5a097a6a8',
+		multipleStatements: true
+	});
 
-	// db.query(InitializeTables, (err) => {
-	// 	if (err) {
-	// 		console.log(err);
-	// 		console.log(err);
-	// 	} else {
-	// 		console.log('success');
-	// 	}
-	// });
+	db.connect(function(err) {
+		if (err) {
+			console.error(`Error connecting to database: ${err}`);
+			setTimeout(HandleDatabseDisconnect, 2000);
+		} else {
+			console.log(`Connected to database as id ${db.threadId}`);
+			SeedUsers(100);
+		}
+	});
 
-	SeedUsers(100);
-	//SeedPlaylists();
-});
+	db.on('error', function(err) {
+		console.log('db error', err);
+		if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+			// Connection to the MySQL server is usually
+			HandleDatabseDisconnect(); // lost due to either server restart, or a
+		} else {
+			// connnection idle timeout (the wait_timeout
+			throw err; // server variable configures this)
+		}
+	});
+}
+
+HandleDatabseDisconnect();
 
 app.get('/', (req, res) => {
 	res.send('Server is running');
@@ -628,6 +633,10 @@ function SeedUsers(amount) {
 			console.log('Error counting users:', err);
 		} else {
 			amount = amount - result[0].userCount;
+			if (amount <= 0) {
+				console.log('No Users to Seed.');
+				return;
+			}
 			console.log(`Please Wait, Seeding ${amount} Users...`);
 			let values = [];
 			for (let index = 0; index < amount; index++) {
