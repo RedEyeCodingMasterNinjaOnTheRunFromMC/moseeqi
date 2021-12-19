@@ -1,6 +1,21 @@
 // import { NavbarUser } from '../components/NavBarUser';
 import { Link } from 'react-router-dom';
-import { Spacer, Menu, MenuButton, MenuDivider, MenuItem, MenuList, Image, HStack, Button, VStack, Heading, Text, Box, StackDivider } from '@chakra-ui/react';
+import {
+	Spacer,
+	Menu,
+	MenuButton,
+	MenuDivider,
+	MenuItem,
+	MenuList,
+	Image,
+	HStack,
+	Button,
+	VStack,
+	Heading,
+	Text,
+	Box,
+	StackDivider
+} from '@chakra-ui/react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { useParams } from 'react-router';
 import { useEffect, useState } from 'react';
@@ -18,32 +33,41 @@ export const Music = () => {
 
 	const AddSongToPlaylist = (playlistName, p_ph) => {
 		console.log('adding to p:');
-		Axios.post('https://moseeqi.herokuapp.com/add_song_to_playlist',{
-			pname: playlistName,
-			sname: sname,
-			p_ph: p_ph,
-			s_ph: phone_number
-		}, {headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }
-		}).then((response) => {
+		Axios.post(
+			`${process.env.REACT_APP_SERVER_URL}/add_song_to_playlist`,
+			{
+				pname: playlistName,
+				sname: sname,
+				p_ph: p_ph,
+				s_ph: phone_number
+			},
+			{
+				headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }
+			}
+		).then((response) => {
 			if (response.data === 'song-added-to-playlist') {
 				console.log('song added playlist Sucess!');
 			} else if (response.data === 'duplicate-entry') {
 				//update page
-				console.log("dup entry");
+				console.log('dup entry');
 			}
 		});
 	};
 
 	const AddLike = () => {
 		setIsLiked(true);
-		Axios.post('https://moseeqi.herokuapp.com/add_like', {
-			check: false,
-			phone_number: phone_number,
-			sname: sname,
-			liker_ph: JSON.parse(sessionStorage.getItem("user-data")).phone_number
-		}, {
-			headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }
-		}).then((response) => {
+		Axios.post(
+			`${process.env.REACT_APP_SERVER_URL}/add_like`,
+			{
+				check: false,
+				phone_number: phone_number,
+				sname: sname,
+				liker_ph: JSON.parse(sessionStorage.getItem('user-data')).phone_number
+			},
+			{
+				headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }
+			}
+		).then((response) => {
 			if (response.data === 'error') {
 				setIsLiked(false);
 				console.log('like invalid');
@@ -58,39 +82,51 @@ export const Music = () => {
 
 	const GetPlaylist = () => {
 		console.log('here');
-		Axios.post('https://moseeqi.herokuapp.com/search_playlist', {
-				phone_number: JSON.parse(sessionStorage.getItem("user-data")).phone_number
-			}, {
+		Axios.post(
+			`${process.env.REACT_APP_SERVER_URL}/search_playlist`,
+			{
+				phone_number: JSON.parse(sessionStorage.getItem('user-data')).phone_number
+			},
+			{
 				headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }
-			}).then((response) => {
-				if (response.data === 'no_match') {
-					setNoPlaylist(true);
-				} else {
-					setPlaylists(response.data);
-					setNoPlaylist(false);
-				}
-			});
+			}
+		).then((response) => {
+			if (response.data === 'no_match') {
+				setNoPlaylist(true);
+			} else {
+				setPlaylists(response.data);
+				setNoPlaylist(false);
+			}
+		});
 	};
 
 	useEffect(() => {
-		Axios.post('https://moseeqi.herokuapp.com/get-music', {
-			phone_number: phone_number,
-			sname: sname
-		}, {
-			headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }
-		}).then((response) => {
+		Axios.post(
+			`${process.env.REACT_APP_SERVER_URL}/get-music`,
+			{
+				phone_number: phone_number,
+				sname: sname
+			},
+			{
+				headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }
+			}
+		).then((response) => {
 			setData(response.data[0]);
 			console.log('music info received');
 		});
 		//to check if user has already liked this song
-		Axios.post('https://moseeqi.herokuapp.com/add_like', {
-		check: true,
-		phone_number: phone_number,
-		sname: sname,
-		liker_ph: JSON.parse(sessionStorage.getItem("user-data")).phone_number
-		}, {
-			headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }
-		}).then((response) => {
+		Axios.post(
+			`${process.env.REACT_APP_SERVER_URL}/add_like`,
+			{
+				check: true,
+				phone_number: phone_number,
+				sname: sname,
+				liker_ph: JSON.parse(sessionStorage.getItem('user-data')).phone_number
+			},
+			{
+				headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }
+			}
+		).then((response) => {
 			if (response.data === 'liked') {
 				setIsLiked(true);
 				console.log('liked alredaugs');
@@ -107,43 +143,48 @@ export const Music = () => {
 			<HStack w="full" pr={20} pt={5} pb={5} pl={10} spacing={10} bg="brand.primary">
 				<Spacer />
 				<Menu>
-				<MenuButton
-					px={3}
-					py={1}
-					transition='all 0.2s'
-					// borderWidth='1px'
-					borderRadius='full'
-					textColor='white'
-					_hover={{ bg: 'gray.400' }}
-					_expanded={{ bg: 'green.500' }}
-					_focus={{ boxShadow: 'outline' }}
-					onClick={GetPlaylist}
-				>
-					Add to Playlist <ChevronDownIcon />
-				</MenuButton>
-				<MenuList>
-					<Link to="/create_playlist">
-						<MenuItem>New Playlist</MenuItem>
-					</Link>
-					<MenuDivider />
-					{ noPlaylist ? 
-					<MenuItem>
-						No Playlist Found
-					</MenuItem>
-					: playlists.map((p) => (
-						<MenuItem key={p.pname} onClick={()=>AddSongToPlaylist(p.pname, p.creator_phone_number)}>
-							{p.pname}
-						</MenuItem>
-					))}	
-				</MenuList>
+					<MenuButton
+						px={3}
+						py={1}
+						transition="all 0.2s"
+						// borderWidth='1px'
+						borderRadius="full"
+						textColor="white"
+						_hover={{ bg: 'gray.400' }}
+						_expanded={{ bg: 'green.500' }}
+						_focus={{ boxShadow: 'outline' }}
+						onClick={GetPlaylist}
+					>
+						Add to Playlist <ChevronDownIcon />
+					</MenuButton>
+					<MenuList>
+						<Link to="/create_playlist">
+							<MenuItem>New Playlist</MenuItem>
+						</Link>
+						<MenuDivider />
+						{noPlaylist ? (
+							<MenuItem>No Playlist Found</MenuItem>
+						) : (
+							playlists.map((p) => (
+								<MenuItem
+									key={p.pname}
+									onClick={() => AddSongToPlaylist(p.pname, p.creator_phone_number)}
+								>
+									{p.pname}
+								</MenuItem>
+							))
+						)}
+					</MenuList>
 				</Menu>
-				{!isLiked? 
-				<Button colorScheme="pink" textColor="white" size="sm" onClick={AddLike}> 
-					LIKE 
-				</Button> : 
-				<Button colorScheme="green" textColor="white" size="sm"> 
-					LIKED 
-				</Button>}
+				{!isLiked ? (
+					<Button colorScheme="pink" textColor="white" size="sm" onClick={AddLike}>
+						LIKE
+					</Button>
+				) : (
+					<Button colorScheme="green" textColor="white" size="sm">
+						LIKED
+					</Button>
+				)}
 				<Link to="/search">
 					<Button colorScheme="blue" textColor="white" size="sm">
 						Back
@@ -176,7 +217,11 @@ export const Music = () => {
 				</Box> */}
 				<Spacer />
 
-				<MusicPlayer source={`https://moseeqi.herokuapp.com/${phone_number}/music/${sname}`} ph={phone_number} sn={sname} />
+				<MusicPlayer
+					source={`${process.env.REACT_APP_SERVER_URL}/${phone_number}/music/${sname}`}
+					ph={phone_number}
+					sn={sname}
+				/>
 			</VStack>
 		</div>
 	);

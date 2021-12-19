@@ -63,18 +63,18 @@ let users = []; //for seeding
 // CREATE TABLE views (pname varchar(45) NOT NULL, username varchar(45) DEFAULT NULL, user_number varchar(45) NOT NULL, PRIMARY KEY (pname,user_number));`;
 
 const db = mysql.createConnection({
-	host: 'localhost',
-	database: 'moseeqi',
-	user: 'root',
-	multipleStatements: true
-
-	// socketPath: 'mysql://bf6e65fdfe9335:f4ac9a38@us-cdbr-east-05.cleardb.net/heroku_9cc6bf5a097a6a8?reconnect=true',
-
-	// user: 'bf6e65fdfe9335',
-	// password: 'f4ac9a38',
-	// hostname: 'us-cdbr-east-05.cleardb.net',
-	// database: 'heroku_9cc6bf5a097a6a8',
+	// host: 'localhost',
+	// database: 'moseeqi',
+	// user: 'root',
 	// multipleStatements: true
+
+	socketPath: 'mysql://bf6e65fdfe9335:f4ac9a38@us-cdbr-east-05.cleardb.net/heroku_9cc6bf5a097a6a8?reconnect=true',
+
+	user: 'bf6e65fdfe9335',
+	password: 'f4ac9a38',
+	hostname: 'us-cdbr-east-05.cleardb.net',
+	database: 'heroku_9cc6bf5a097a6a8',
+	multipleStatements: true
 });
 
 db.connect(function(err) {
@@ -87,7 +87,7 @@ db.connect(function(err) {
 	// db.query(InitializeTables, (err) => {
 	// 	if (err) {
 	// 		console.log(err);
-	// 		throw err;
+	// 		console.log(err);
 	// 	} else {
 	// 		console.log('success');
 	// 	}
@@ -104,7 +104,7 @@ app.get('/', (req, res) => {
 app.get('/check-db', (req, res) => {
 	db.query(`SELECT * FROM user`, (req, res) => {
 		if (err) {
-			throw err;
+			console.log(err);
 		}
 		res.send('user-added');
 	});
@@ -185,7 +185,7 @@ app.post('/login', (req, res) => {
 		'SELECT username FROM user WHERE phone_number = ? AND password = ?',
 		[ phone_number, password ],
 		(err, result) => {
-			if (err) throw err;
+			if (err) console.log(err);
 			if (result[0]) {
 				//sql query result is not null
 				console.log('user name:', result[0].username);
@@ -212,7 +212,7 @@ app.post('/search_user', (req, res) => {
 		'SELECT username, phone_number, follower_count FROM user WHERE username LIKE ?',
 		[ '%' + username + '%' ],
 		(err, result) => {
-			if (err) throw err;
+			if (err) console.log(err);
 			if (result[0]) {
 				//sql query result is not null
 				console.log('query successful');
@@ -231,7 +231,7 @@ app.post('/search_playlist', (req, res) => {
 		'SELECT pname, creator_phone_number FROM playlist WHERE creator_phone_number = ?',
 		[ phone_number ],
 		(err, result) => {
-			if (err) throw err;
+			if (err) console.log(err);
 			if (result[0]) {
 				//sql query result is not null
 				console.log('query successful');
@@ -249,7 +249,7 @@ app.post('/delete_music', (req, res) => {
 	const sname = req.body.sname;
 	db.query('SELECT sname FROM music WHERE sname=? AND phone_number=?', [ sname, phone_number ], (err, result) => {
 		console.log('phone_NUMBER: ', phone_number);
-		if (err) throw err;
+		if (err) console.log(err);
 		if (result[0]) {
 			//sql query result is not null
 			// DELETE ChildTable
@@ -258,7 +258,7 @@ app.post('/delete_music', (req, res) => {
 			db.query('DELETE FROM likes WHERE s_name=? AND s_ph=?', [ sname, phone_number ], (err) => {
 				if (err) {
 					console.log('likes deletion_failed');
-					throw err;
+					console.log(err);
 				} else {
 					console.log('likes deletion_complete');
 				}
@@ -266,7 +266,7 @@ app.post('/delete_music', (req, res) => {
 			db.query('SET FOREIGN_KEY_CHECKS=0;', (err) => {
 				if (err) {
 					console.log('foreign key drop check failed');
-					throw err;
+					console.log(err);
 				} else {
 					console.log('foreign key dropped check');
 				}
@@ -276,18 +276,18 @@ app.post('/delete_music', (req, res) => {
 					db.query('SET FOREIGN_KEY_CHECKS=1;', (err) => {
 						if (err) {
 							console.log('foreign key back-on failed');
-							throw err;
+							console.log(err);
 						} else {
 							console.log('foreign key back on full party mode');
 						}
 					});
 					res.send('deletion_failed');
-					throw err;
+					console.log(err);
 				} else {
 					db.query('SET FOREIGN_KEY_CHECKS=1;', (err) => {
 						if (err) {
 							console.log('foreign key back-on failed');
-							throw err;
+							console.log(err);
 						} else {
 							console.log('foreign key back on full party mode');
 						}
@@ -321,7 +321,7 @@ app.post('/search_music', (req, res) => {
 		'SELECT sname, phone_number, username, like_count, genre, music_path FROM music WHERE (sname LIKE ?) or (username LIKE ?)',
 		[ '%' + sname + '%', '%' + sname + '%' ],
 		(err, result) => {
-			if (err) throw err;
+			if (err) console.log(err);
 			if (result[0]) {
 				//sql query result is not null
 				console.log('query successful', result);
@@ -336,7 +336,7 @@ app.post('/search_music', (req, res) => {
 app.post('/get-user', (req, res) => {
 	console.log('get user request recei', req.body);
 	db.query('SELECT * FROM user WHERE phone_number=?', [ req.body.phone_number ], (err, result) => {
-		if (err) throw err;
+		if (err) console.log(err);
 		if (result[0]) {
 			//sql query result is not null
 			console.log('query successful');
@@ -352,7 +352,7 @@ app.post('/get-music', (req, res) => {
 		'SELECT count(liker_ph) as tot_likes FROM likes WHERE s_ph=? AND s_name=?',
 		[ req.body.phone_number, req.body.sname ],
 		(err, result) => {
-			if (err) throw err;
+			if (err) console.log(err);
 			if (result[0]) {
 				//sql query result is not null
 				console.log('count successful');
@@ -362,7 +362,7 @@ app.post('/get-music', (req, res) => {
 					[ result[0].tot_likes, req.body.sname, req.body.phone_number ],
 					(err) => {
 						if (err) {
-							throw err;
+							console.log(err);
 						} else {
 							console.log('like count added in music successful');
 						}
@@ -376,7 +376,7 @@ app.post('/get-music', (req, res) => {
 		'SELECT SUM(listen_counts) as tot_listens FROM listens WHERE s_ph=? AND s_name=?',
 		[ req.body.phone_number, req.body.sname ],
 		(err, result) => {
-			if (err) throw err;
+			if (err) console.log(err);
 			if (result[0]) {
 				//sql query result is not null
 				console.log('view count successful');
@@ -386,7 +386,7 @@ app.post('/get-music', (req, res) => {
 					[ result[0].tot_listens, req.body.sname, req.body.phone_number ],
 					(err) => {
 						if (err) {
-							throw err;
+							console.log(err);
 						} else {
 							console.log('listen count added in music successful');
 						}
@@ -400,7 +400,7 @@ app.post('/get-music', (req, res) => {
 		'SELECT * FROM music WHERE phone_number=? AND sname=?',
 		[ req.body.phone_number, req.body.sname ],
 		(err, result) => {
-			if (err) throw err;
+			if (err) console.log(err);
 			if (result[0]) {
 				//sql query result is not null
 				console.log('query successful');
@@ -422,7 +422,7 @@ app.post('/add_like', (req, res) => {
 			'SELECT s_ph FROM likes WHERE s_name=? AND s_ph=? AND liker_ph=?',
 			[ sname, phone_number, liker_ph ],
 			(err, result) => {
-				if (err) throw err;
+				if (err) console.log(err);
 				if (result[0]) {
 					//sql query result is not null
 					console.log('like found');
@@ -461,7 +461,7 @@ app.post('/add_listen', (req, res) => {
 		'SELECT listen_counts FROM listens WHERE s_name=? AND s_ph=? AND listener_ph=?',
 		[ s_name, s_ph, listener_ph ],
 		(err, result) => {
-			if (err) throw err;
+			if (err) console.log(err);
 			if (result[0]) {
 				//sql query result is not null
 				db.query(
@@ -469,7 +469,7 @@ app.post('/add_listen', (req, res) => {
 					[ s_name, s_ph, listener_ph ],
 					(err) => {
 						if (err) {
-							throw err;
+							console.log(err);
 						} else {
 							console.log('like count added in music successful');
 						}
@@ -497,12 +497,12 @@ app.post('/delete_account', (req, res) => {
 	//console.log(res);
 	const phone_number = req.body.phone_number;
 	db.query('SELECT username FROM user WHERE phone_number = ?', [ phone_number ], (err, result) => {
-		if (err) throw err;
+		if (err) console.log(err);
 		if (result[0]) {
 			db.query('DELETE FROM user WHERE phone_number = ?', [ phone_number ], (err, result) => {
 				if (err) {
 					res.send('deletion_failed');
-					throw err;
+					console.log(err);
 				} else {
 					var dir = `/data/${phone_number}`;
 					if (!fs.existsSync(dir)) {
@@ -537,7 +537,7 @@ app.post('/follow_user', (req, res) => {
 			[ follower_ph, followed_ph ],
 			(err, result) => {
 				console.log('RES: ', result);
-				if (err) throw err;
+				if (err) console.log(err);
 				if (result[0]) {
 					//sql query result is not null
 					console.log('like found');
@@ -599,7 +599,7 @@ app.post('/add_song_to_playlist', (req, res) => {
 			if (err.errno === 1062) {
 				res.send('duplicate-entry');
 			} else {
-				throw err;
+				console.log(err);
 			}
 		} else {
 			res.send('song-added-to-playlist');
@@ -623,13 +623,12 @@ function getRandomArbitrary(min, max) {
 }
 
 function SeedUsers(amount) {
-	console.log('Please Wait, Seeding Users...');
 	db.query('SELECT COUNT(*) AS userCount FROM user', [], (err, result) => {
 		if (err) {
 			console.log('Error counting users:', err);
 		} else {
 			amount = amount - result[0].userCount;
-
+			console.log(`Please Wait, Seeding ${amount} Users...`);
 			let values = [];
 			for (let index = 0; index < amount; index++) {
 				const username = uniqueNamesGenerator({ dictionaries: [ adjectives, colors, animals ] });

@@ -101,16 +101,21 @@ export const Search = () => {
 	const navigate = useNavigate();
 
 	const UserRequest = () => {
-		Axios.post('https://moseeqi.herokuapp.com/search_user', {
-			username: username
-		}, {
-			headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }
-		}).then((response) => {
+		Axios.post(
+			`${process.env.REACT_APP_SERVER_URL}/search_user`,
+			{
+				username: username
+			},
+			{
+				headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }
+			}
+		).then((response) => {
 			if (response.data === 'no_match') {
 				setNoMatch(true);
 				setSongMatch(false);
 				setUserMatch(false);
 			} else {
+				console.log('Found Users');
 				setUsers(response.data);
 				setNoMatch(false);
 				setUserMatch(true);
@@ -120,11 +125,15 @@ export const Search = () => {
 	};
 
 	const SongRequest = () => {
-		Axios.post('https://moseeqi.herokuapp.com/search_music', {
-			sname: username
-		}, {
-			headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }
-		}).then((response) => {
+		Axios.post(
+			`${process.env.REACT_APP_SERVER_URL}/search_music`,
+			{
+				sname: username
+			},
+			{
+				headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }
+			}
+		).then((response) => {
 			if (response.data === 'no_match') {
 				setNoMatch(true);
 				setSongMatch(false);
@@ -147,11 +156,15 @@ export const Search = () => {
 		} else if (value === 'both') {
 			console.log('both search');
 			setNoMatch(true);
-			Axios.post('https://moseeqi.herokuapp.com/search_user', {
-				username: username
-			}, {
-				headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }
-			}).then((response) => {
+			Axios.post(
+				`${process.env.REACT_APP_SERVER_URL}/search_user`,
+				{
+					username: username
+				},
+				{
+					headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }
+				}
+			).then((response) => {
 				if (response.data === 'no_match') {
 					setSongMatch(false);
 				} else {
@@ -163,11 +176,15 @@ export const Search = () => {
 					setNoMatch(false);
 				}
 			});
-			Axios.post('https://moseeqi.herokuapp.com/search_music', {
-				sname: username
-			}, {
-				headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }
-			}).then((response) => {
+			Axios.post(
+				`${process.env.REACT_APP_SERVER_URL}/search_music`,
+				{
+					sname: username
+				},
+				{
+					headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }
+				}
+			).then((response) => {
 				if (response.data === 'no_match') {
 					setSongMatch(false);
 				} else {

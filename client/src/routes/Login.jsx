@@ -16,7 +16,7 @@ export const Login = () => {
 		setIsInvalid(false);
 		setValid(false);
 		actions.setSubmitting(false);
-		Axios.post('https://moseeqi.herokuapp.com/login', values, {
+		Axios.post(`${process.env.REACT_APP_SERVER_URL}/login`, values, {
 			headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }
 		}).then((response) => {
 			if (response.data === 'invalid') {
@@ -27,10 +27,15 @@ export const Login = () => {
 				sessionStorage.setItem('isUserLogged', true);
 				let data = sessionStorage.getItem('user-data');
 				data = JSON.parse(data);
-				Axios.post('https://moseeqi.herokuapp.com/get-user',{
-					phone_number: data.phone_number
-				},  {headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }
-				}).then((response) => {
+				Axios.post(
+					`${process.env.REACT_APP_SERVER_URL}/get-user`,
+					{
+						phone_number: data.phone_number
+					},
+					{
+						headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }
+					}
+				).then((response) => {
 					sessionStorage.setItem('user-data', JSON.stringify(response.data[0]));
 				});
 				sessionStorage.getItem('isUserLogged');

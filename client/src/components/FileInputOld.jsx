@@ -50,10 +50,10 @@ export const FileInputOld = () => {
 			formData.append('user_name', data.username);
 			formData.append('sname', songName);
 			formData.append('genre', genre);
-			Axios.post('https://moseeqi.herokuapp.com//', formData, {
+			Axios.post(`${process.env.REACT_APP_SERVER_URL}/upload_music`, formData, {
 				headers: {
 					'Content-Type': 'multipart/form-data',
-					'Access-Control-Allow-Origin': '*', 
+					'Access-Control-Allow-Origin': '*'
 					//'Content-Type': 'application/json
 				}
 			})
