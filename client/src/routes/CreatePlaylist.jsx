@@ -45,11 +45,11 @@ export const CreatePlaylist = () => {
 						}}
 					/>
 					<Button w={200} colorScheme="green" onClick={createPL}>
-						Upload
+						Create
 					</Button>
 					<VStack w="300px" align="left" pt={5}>
 						<Text textColor="gray" align="center" fontSize="8pt">
-							By Uploading this file, you agree to our terms and conditions.{' '}
+							By creating this file, you agree to our terms and conditions.{' '}
 						</Text>
 					</VStack>
 					{playlistAdded ? (

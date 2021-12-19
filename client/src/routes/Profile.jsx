@@ -206,9 +206,6 @@ export const Profile = () => {
 				<Box h="20px">
 					<Text> Followers: {data.follower_count} </Text>
 				</Box>
-				<Box h="20px">
-					<Text> Earnings: {data.earnings} </Text>
-				</Box>
 				<Spacer />
 			</VStack>
 		</div>

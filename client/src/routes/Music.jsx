@@ -32,7 +32,7 @@ export const Music = () => {
 	const [ playlists, setPlaylists ] = useState([]);
 
 	const AddSongToPlaylist = (playlistName, p_ph) => {
-		console.log('adding to p:');
+		//console.log('adding to p:');
 		Axios.post(
 			`${process.env.REACT_APP_SERVER_URL}/add_song_to_playlist`,
 			{
