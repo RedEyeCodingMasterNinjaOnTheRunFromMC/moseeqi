@@ -48,7 +48,7 @@ export const Login = () => {
 
 	return (
 		<VStack overflow="hidden" height="100vh" position="relative" width="100vw" alignItems="flex-end">
-			<HStack width="full" zIndex={10} paddingLeft="5vw" paddingRight="5vw">
+			<HStack width="full" zIndex={10} paddingLeft="10vw" paddingRight="5vw">
 				<RouterLink to="/">
 					<Text
 						fontWeight={700}
@@ -81,7 +81,7 @@ export const Login = () => {
 				position="absolute"
 				bottom="10vh"
 				left="10vw"
-				boxSize="25vw"
+				boxSize="60vh"
 				objectFit="contain"
 				src={drum}
 				alt="BG"
@@ -95,48 +95,50 @@ export const Login = () => {
 				</RouterLink>
 			</VStack>
 
-			<VStack spacing={10} width="30vw" paddingRight="10vw" paddingTop="30px">
+			<VStack spacing={10} width="40vw" paddingRight="10vw" paddingTop="30px">
 				<Heading fontWeight={800} size="md">
 					Login
 				</Heading>
 				<Formik initialValues={{ phone_number: '', password: '' }} onSubmit={LoginOnClick}>
 					{(props) => (
 						<Form>
-							<Field name="phone_number">
-								{({ field, form }) => (
-									<TextInput
-										label="Phone Number"
-										id="phone_number"
-										placeholder=""
-										field={field}
-										error={form.errors.phone_number}
-										touched={form.touched.phone_number}
-										type="tel"
-									/>
-								)}
-							</Field>
-							<Field name="password">
-								{({ field, form }) => (
-									<PasswordInput
-										label="Password"
-										id="password"
-										placeholder=""
-										field={field}
-										error={form.errors.password}
-										touched={form.touched.password}
-									/>
-								)}
-							</Field>
+							<VStack spacing={8} width="30vw">
+								<Field name="phone_number">
+									{({ field, form }) => (
+										<TextInput
+											label="Phone Number"
+											id="phone_number"
+											placeholder=""
+											field={field}
+											error={form.errors.phone_number}
+											touched={form.touched.phone_number}
+											type="tel"
+										/>
+									)}
+								</Field>
+								<Field name="password">
+									{({ field, form }) => (
+										<PasswordInput
+											label="Password"
+											id="password"
+											placeholder=""
+											field={field}
+											error={form.errors.password}
+											touched={form.touched.password}
+										/>
+									)}
+								</Field>
 
-							<Button
-								colorScheme="secondary"
-								w="full"
-								size="lg"
-								isLoading={props.isSubmitting}
-								type="submit"
-							>
-								LOG IN
-							</Button>
+								<Button
+									colorScheme="secondary"
+									width="50%"
+									size="lg"
+									isLoading={props.isSubmitting}
+									type="submit"
+								>
+									LOG IN
+								</Button>
+							</VStack>
 						</Form>
 					)}
 				</Formik>

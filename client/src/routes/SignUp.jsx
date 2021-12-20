@@ -71,8 +71,8 @@ export const SignUp = () => {
 	};
 
 	return (
-		<VStack overflow="hidden" height="100vh" position="relative" width="100vw" alignItems="flex-start">
-			<HStack width="full" zIndex={10} paddingLeft="5vw" paddingRight="5vw">
+		<VStack overflowX="hidden" height="100vh" position="relative" width="100vw" alignItems="flex-start">
+			<HStack width="full" zIndex={10} paddingLeft="10vw" paddingRight="5vw">
 				<Button colorScheme="secondary" textColor="white" size="sm" onClick={() => navigate(-1)}>
 					Back
 				</Button>
@@ -105,7 +105,7 @@ export const SignUp = () => {
 				position="absolute"
 				bottom="10vh"
 				right="10vw"
-				boxSize="25vw"
+				boxSize="60vh"
 				objectFit="contain"
 				src={viola}
 				alt="BG"
@@ -119,7 +119,7 @@ export const SignUp = () => {
 				</RouterLink>
 			</VStack>
 
-			<VStack spacing={10} paddingLeft="10vw" paddingTop="30px" width="30vw">
+			<VStack spacing={10} paddingLeft="10vw" paddingTop="30px" paddingBottom="30px" width="40vw">
 				<Heading fontWeight={800} size="md">
 					Create Account
 				</Heading>
@@ -130,77 +130,79 @@ export const SignUp = () => {
 				>
 					{(props) => (
 						<Form>
-							<Field name="username">
-								{({ field, form }) => (
-									<TextInput
-										label="Username"
-										id="username"
-										placeholder=""
-										field={field}
-										error={form.errors.username}
-										touched={form.touched.username}
-									/>
-								)}
-							</Field>
-							<Field name="email">
-								{({ field, form }) => (
-									<TextInput
-										label="Email"
-										id="email"
-										placeholder="example@site.com"
-										field={field}
-										error={form.errors.email}
-										touched={form.touched.email}
-									/>
-								)}
-							</Field>
-							<Field name="phone_number">
-								{({ field, form }) => (
-									<TextInput
-										label="Phone Number"
-										id="phone_number"
-										placeholder=""
-										field={field}
-										error={form.errors.phone_number}
-										touched={form.touched.phone_number}
-										type="tel"
-									/>
-								)}
-							</Field>
-							<Field name="password">
-								{({ field, form }) => (
-									<PasswordInput
-										label="Password"
-										id="password"
-										placeholder=""
-										field={field}
-										error={form.errors.password}
-										touched={form.touched.password}
-									/>
-								)}
-							</Field>
-							<Field name="confirm">
-								{({ field, form }) => (
-									<PasswordInput
-										label="Confirm Password"
-										id="confirm"
-										placeholder=""
-										field={field}
-										error={form.errors.confirm}
-										touched={form.touched.confirm}
-									/>
-								)}
-							</Field>
+							<VStack spacing={8} width="30vw">
+								<Field name="username">
+									{({ field, form }) => (
+										<TextInput
+											label="Username"
+											id="username"
+											placeholder=""
+											field={field}
+											error={form.errors.username}
+											touched={form.touched.username}
+										/>
+									)}
+								</Field>
+								<Field name="email">
+									{({ field, form }) => (
+										<TextInput
+											label="Email"
+											id="email"
+											placeholder="example@site.com"
+											field={field}
+											error={form.errors.email}
+											touched={form.touched.email}
+										/>
+									)}
+								</Field>
+								<Field name="phone_number">
+									{({ field, form }) => (
+										<TextInput
+											label="Phone Number"
+											id="phone_number"
+											placeholder=""
+											field={field}
+											error={form.errors.phone_number}
+											touched={form.touched.phone_number}
+											type="tel"
+										/>
+									)}
+								</Field>
+								<Field name="password">
+									{({ field, form }) => (
+										<PasswordInput
+											label="Password"
+											id="password"
+											placeholder=""
+											field={field}
+											error={form.errors.password}
+											touched={form.touched.password}
+										/>
+									)}
+								</Field>
+								<Field name="confirm">
+									{({ field, form }) => (
+										<PasswordInput
+											label="Confirm Password"
+											id="confirm"
+											placeholder=""
+											field={field}
+											error={form.errors.confirm}
+											touched={form.touched.confirm}
+										/>
+									)}
+								</Field>
 
-							<Button
-								colorScheme="primary"
-								w="full"
-								size="lg"
-								isLoading={props.isSubmitting}
-								type="submit"
-							>
-								Sign Up
-							</Button>
+								<Button
+									colorScheme="primary"
+									width="50%"
+									size="lg"
+									isLoading={props.isSubmitting}
+									type="submit"
+								>
+									Sign Up
+								</Button>
+							</VStack>
 							<VStack w="300px" align="left" pt={5}>
 								<Text textColor="gray" align="center" fontSize="8pt">
 									By Signing up, you agree to our terms and conditions{' '}

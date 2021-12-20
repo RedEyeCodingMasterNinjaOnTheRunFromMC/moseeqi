@@ -2,6 +2,7 @@ import React from 'react';
 import {
 	useBoolean,
 	Box,
+	Icon,
 	Text,
 	VStack,
 	FormControl,
@@ -12,6 +13,7 @@ import {
 	Input,
 	InputRightElement
 } from '@chakra-ui/react';
+import { MdVisibilityOff, MdVisibility } from 'react-icons/md';
 
 export const TextInput = ({ label, id, placeholder, field, error, touched, type }) => {
 	return (
@@ -19,9 +21,8 @@ export const TextInput = ({ label, id, placeholder, field, error, touched, type 
 			<FormLabel ml="18px" htmlFor={id}>
 				{label}
 			</FormLabel>
-			<Input {...field} id={id} placeholder={placeholder} variant="filled" type={type} />
+			<Input {...field} id={id} width="100%" placeholder={placeholder} variant="filled" type={type} />
 			<FormErrorMessage>{error}</FormErrorMessage>
-			<Box w="100%" h={5} p={4} color="white" />
 		</FormControl>
 	);
 };
@@ -57,13 +58,17 @@ export const PasswordInput = ({ label, id, placeholder, field, error, touched })
 					type={show ? 'text' : 'password'}
 				/>
 				<InputRightElement width="4.5rem">
-					<Button h="1.75rem" size="sm" onClick={setShow.toggle}>
-						{show ? 'Hide' : 'Show'}
-					</Button>
+					<Icon
+						cursor="pointer"
+						color="brand.primary"
+						w={6}
+						h={6}
+						onClick={setShow.toggle}
+						as={show ? MdVisibility : MdVisibilityOff}
+					/>
 				</InputRightElement>
 			</InputGroup>
 			<FormErrorMessage>{error}</FormErrorMessage>
-			<Box w="100%" h={5} p={4} color="white" />
 		</FormControl>
 	);
 };
