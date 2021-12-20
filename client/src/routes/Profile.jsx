@@ -29,7 +29,9 @@ export const Profile = () => {
 	const [ isSelfProfile, setSeltProfile ] = useState(false);
 	const [ following, setFollowing ] = useState(false);
 	const [ noPlaylist, setNoPlaylist ] = useState(false);
+	const [ noSongs, setNoSong ] = useState(false);
 	const [ playlists, setPlaylists ] = useState([]);
+	const [ songs, setSongs ] = useState([]);
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -76,22 +78,22 @@ export const Profile = () => {
 		});
 	}, []);
 
-	const deleteAccount = () => {
-		Axios.post(
-			`${process.env.REACT_APP_SERVER_URL}/delete_account`,
-			{
-				phone_number: phone_number
-			},
-			{
-				headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }
-			}
-		).then((response) => {
-			//TODO: create a page
-		});
-	};
+	// const deleteAccount = () => {
+	// 	Axios.post(
+	// 		`${process.env.REACT_APP_SERVER_URL}/delete_account`,
+	// 		{
+	// 			phone_number: phone_number
+	// 		},
+	// 		{
+	// 			headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }
+	// 		}
+	// 	).then((response) => {
+	// 		//TODO: create a page
+	// 	});
+	// };
 
 	const GetPlaylist = () => {
-		console.log('here');
+		//console.log('here');
 		Axios.post(
 			`${process.env.REACT_APP_SERVER_URL}/search_playlist`,
 			{
@@ -106,6 +108,27 @@ export const Profile = () => {
 			} else {
 				setPlaylists(response.data);
 				setNoPlaylist(false);
+			}
+		});
+	};
+
+	const GetSongs = () => {
+		//console.log('here');
+		Axios.post(
+			`${process.env.REACT_APP_SERVER_URL}/search_self_music`,
+			{
+				phone_number: JSON.parse(sessionStorage.getItem('user-data')).phone_number
+			},
+			{
+				headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }
+			}
+		).then((response) => {
+			if (response.data === 'no_match') {
+				setNoSong(true);
+			} else {
+				console.log("Songs res: ",response.data);
+				setSongs(response.data);
+				setNoSong(false);
 			}
 		});
 	};
@@ -165,16 +188,40 @@ export const Profile = () => {
 						)}
 					</MenuList>
 				</Menu>
+				<Menu>
+					<MenuButton
+						px={3}
+						py={1}
+						transition="all 0.2s"
+						// borderWidth='1px'
+						borderRadius="full"
+						textColor="white"
+						_hover={{ bg: 'gray.400' }}
+						_expanded={{ bg: 'green.500' }}
+						_focus={{ boxShadow: 'outline' }}
+						onClick={GetSongs}
+					>
+						My Songs <ChevronDownIcon />
+					</MenuButton>
+					<MenuList>
+						{noSongs ? (
+							<MenuItem>No Uploads</MenuItem>
+						) : (
+							songs.map((song) => <Link to= {`/music/${phone_number}/${song.sname}`}><MenuItem key={song.sname}>{song.sname}</MenuItem></Link>)
+						)}
+					</MenuList>
+				</Menu>
+				
 				<Button colorScheme="blue" textColor="white" size="sm" onClick={() => navigate(-1)}>
 					Back
 				</Button>
-				{isSelfProfile ? (
+				{/* {isSelfProfile ? (
 					<Link to="/">
 						<Button colorScheme="red" textColor="white" size="sm" onClick={deleteAccount}>
 							Delete Account
 						</Button>
 					</Link>
-				) : null}
+				) : null} */}
 
 				{isSelfProfile ? null : following ? (
 					<Button colorScheme="red" textColor="white" size="sm">
