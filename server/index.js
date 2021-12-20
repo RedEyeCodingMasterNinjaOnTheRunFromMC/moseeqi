@@ -237,7 +237,7 @@ app.post('/search_playlist', (req, res) => {
 		[ phone_number ],
 		(err, result) => {
 			if (err) console.log(err);
-			if (result[0]) {
+			if (result) {
 				//sql query result is not null
 				console.log('query successful');
 				res.send(result);
@@ -246,6 +246,20 @@ app.post('/search_playlist', (req, res) => {
 			}
 		}
 	);
+});
+
+app.post('/get-recommended-playlist', (req, res) => {
+	console.log('recommed');
+	db.query('SELECT pname, creator_phone_number FROM playlist ORDER BY rand() LIMIT 20', [], (err, result) => {
+		if (err) console.log(err);
+		if (result) {
+			//sql query result is not null
+			//console.log('recommende:', result);
+			res.send(result);
+		} else {
+			res.send('no_match');
+		}
+	});
 });
 
 app.post('/delete_music', (req, res) => {
