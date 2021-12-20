@@ -151,12 +151,12 @@ const NAV_ITEMS = [
 			{
 				label: 'Moseeqi',
 				subLabel: 'Find the goal of this platform',
-				href: '#'
+				href: '/about'
 			},
 			{
 				label: 'Who we are',
 				subLabel: 'Get to know the team behind Moseeqi',
-				href: '#'
+				href: '/about'
 			}
 		]
 	},

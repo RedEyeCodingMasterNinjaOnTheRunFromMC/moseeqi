@@ -88,8 +88,8 @@ export const Login = () => {
 				//filter="drop-shadow(10px 10px 10px #555)"
 			/>
 
-			<VStack position="absolute" left="5vw" top="20vh" alignItems="flex-end">
-				<Heading color="white">Join Us</Heading>
+			<VStack position="absolute" left="5vw" top="20vh" spacing={5} alignItems="flex-start">
+				<Heading color="white">Join us now!</Heading>
 				<RouterLink to="/signup">
 					<Button size="lg">SIGN UP</Button>
 				</RouterLink>

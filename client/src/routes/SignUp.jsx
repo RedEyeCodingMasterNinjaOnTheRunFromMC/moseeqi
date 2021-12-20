@@ -112,7 +112,7 @@ export const SignUp = () => {
 				//filter="drop-shadow(10px 10px 10px #555)"
 			/>
 
-			<VStack position="absolute" right="5vw" top="20vh" alignItems="flex-end">
+			<VStack position="absolute" right="5vw" top="20vh" spacing={5} alignItems="flex-end">
 				<Heading color="white">One of us already?</Heading>
 				<RouterLink to="/login">
 					<Button size="lg">LOGIN</Button>

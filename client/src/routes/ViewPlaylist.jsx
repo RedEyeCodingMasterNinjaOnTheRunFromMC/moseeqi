@@ -14,8 +14,6 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { InvalidMessage } from '../components/InvalidMessage';
-// import { SimpleInput } from '../components/TextInput';
-// import { InvalidMessage } from '../components/InvalidMessage';
 import { useParams } from 'react-router';
 import Axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -78,13 +76,12 @@ export const ViewPlaylist = () => {
 			// for (let i = 0; i < response.data.length; i++) {
 			//     setSongs((songs) => [ ...songs, response.data[i] ]);
 			// }
-			if (response.data.length === 0){
+			if (response.data.length === 0) {
 				setNoSongs(true);
 			} else {
 				setNoSongs(false);
 				setSongs(response.data);
 			}
-			
 		});
 	}, []);
 
@@ -109,12 +106,11 @@ export const ViewPlaylist = () => {
 
 					{noSongs ? (
 						<InvalidMessage>
-							message="Playlist Empty!"
-							color="red.800"
-							bg="linear(to-t, red.200, red.100)"
+							message="Playlist Empty!" color="red.800" bg="linear(to-t, red.200, red.100)"
 						</InvalidMessage>
-					) : <RetSongs songs={songs} />}
-					
+					) : (
+						<RetSongs songs={songs} />
+					)}
 				</VStack>
 			</Container>
 		</div>

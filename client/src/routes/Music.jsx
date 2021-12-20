@@ -23,7 +23,6 @@ import { useEffect, useState } from 'react';
 import Axios from 'axios';
 import { MusicPlayer } from '../components/MusicPlayer';
 import { TiHeartOutline, TiHeart, TiEyeOutline, TiDocumentText } from 'react-icons/ti';
-import { RiMenuAddLine } from 'react-icons/ri';
 
 export const Music = () => {
 	// let data = sessionStorage.getItem('user-data');

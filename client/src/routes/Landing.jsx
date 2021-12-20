@@ -10,18 +10,25 @@ export const Landing = () => (
 			{/* <MusicVisualizer /> */}
 			<HStack height="100%" width="100%" paddingTop="10vh" paddingLeft="10vw" paddingRight="10vw">
 				<VStack alignItems="flex-start">
-					<Heading color="white" size="4xl">
+					<Heading color="white" fontSize="4vw">
 						Create Music
 					</Heading>
 					<HStack>
-						<Heading color="white" size="4xl">
+						<Heading color="white" fontSize="4vw">
 							that Moves People
 						</Heading>
-						<Heading color="brand.secondary" size="4xl">
+						<Heading color="brand.secondary" fontSize="4vw">
 							.
 						</Heading>
 					</HStack>
-					<Text width="30vw" color="white" fontSize="xl" opacity="60%" paddingTop="30px" paddingBottom="30px">
+					<Text
+						width="30vw"
+						color="white"
+						fontSize="1.5vw"
+						opacity="60%"
+						paddingTop="30px"
+						paddingBottom="30px"
+					>
 						Moseeqi allows you to create, share and listen to music as part of a global community
 					</Text>
 					<RouterLink to="/signup">
