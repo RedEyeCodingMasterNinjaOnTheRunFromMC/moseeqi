@@ -1,4 +1,4 @@
-import { VStack, Image, Text, Box } from '@chakra-ui/react';
+import { VStack, Image, Text, Box, Flex } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import { MusicCovers } from '../assets/music covers/MusicCovers';
 import { Link, useNavigate } from 'react-router-dom';
@@ -12,26 +12,37 @@ export const PlaylistCard = ({ name, phoneNumber, height, width }) => {
 		[ name ]
 	);
 	return (
-		<Link to={`/view_playlist/${name}/${phoneNumber}`}>
-			<VStack
-				height={height}
-				width={width}
-				boxShadow="dark-lg"
-				bgColor="brand.secondary"
-				overflow="hidden"
-				borderRadius="20px"
-			>
-				<Image src={image} />
-				<Text textColor="white">{name}</Text>
-			</VStack>
-		</Link>
+		<Box
+			height={height}
+			width={width}
+			boxShadow="dark-lg"
+			bgColor="brand.secondary"
+			overflow="hidden"
+			borderRadius="20px"
+		>
+			<Link to={`/view_playlist/${name}/${phoneNumber}`}>
+				<VStack>
+					<Image src={image} />
+					<Text textColor="white">{name}</Text>
+				</VStack>
+			</Link>
+		</Box>
 	);
 };
 
 export const EmptyPlaylistCard = ({ height, width }) => {
 	return (
-		<Box height={height} width={width} boxShadow="dark-lg" overflow="hidden" borderRadius="20px">
-			You have not created a playlist yet. Create one now!
-		</Box>
+		<Flex
+			height={height}
+			width={width}
+			boxShadow="dark-lg"
+			overflow="hidden"
+			borderRadius="20px"
+			alignItems="center"
+			justifyContent="center"
+			padding="10px"
+		>
+			<Text>You have not created a playlist yet. Create one now!</Text>
+		</Flex>
 	);
 };
