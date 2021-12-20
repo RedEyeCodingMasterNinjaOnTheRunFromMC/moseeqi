@@ -48,7 +48,7 @@ export const Login = () => {
 
 	return (
 		<VStack overflow="hidden" height="100vh" position="relative" width="100vw" alignItems="flex-end">
-			<HStack width="full" zIndex={10} paddingLeft="10vw" paddingRight="5vw">
+			<HStack width="full" zIndex={10} paddingLeft="5vw" paddingRight="10vw">
 				<RouterLink to="/">
 					<Text
 						fontWeight={700}
