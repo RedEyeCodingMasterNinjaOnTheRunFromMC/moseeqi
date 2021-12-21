@@ -12,11 +12,17 @@ export const MusicPlayer = ({ source, ph, sn }) => (
 		showFilledVolume={true}
 		onEnded={(e) => {
 			console.log('in onEnded');
-			Axios.post(`${process.env.REACT_APP_SERVER_URL}/add_listen`, {
-				s_ph: ph,
-				s_name: sn,
-				listener_ph: JSON.parse(sessionStorage.getItem('user-data')).phone_number
-			}).then((err) => {
+			Axios.post(
+				`${process.env.REACT_APP_SERVER_URL}/add_listen`,
+				{
+					s_ph: ph,
+					s_name: sn,
+					listener_ph: JSON.parse(sessionStorage.getItem('user-data')).phone_number
+				},
+				{
+					headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }
+				}
+			).then((err) => {
 				if (err) {
 					console.log('error occured');
 					throw err;

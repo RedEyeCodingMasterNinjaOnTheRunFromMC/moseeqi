@@ -33,7 +33,7 @@ export const NavbarUser = () => {
 				</Button>
 			</Link>
 			<Link to="/delete_music">
-				<Button colorScheme="orange" textColor="white" size="sm">
+				<Button colorScheme="primary" textColor="white" size="sm">
 					DELETE MUSIC
 				</Button>
 			</Link>
