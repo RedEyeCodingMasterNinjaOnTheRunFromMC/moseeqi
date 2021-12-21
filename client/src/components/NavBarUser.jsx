@@ -32,11 +32,11 @@ export const NavbarUser = () => {
 					Upload Music
 				</Button>
 			</Link>
-			{/* <Link to="/delete_music">
+			<Link to="/delete_music">
 				<Button colorScheme="orange" textColor="white" size="sm">
 					DELETE MUSIC
 				</Button>
-			</Link> */}
+			</Link>
 			<Link to="/search">
 				<Button colorScheme="primary" textColor="white" size="sm">
 					Search
